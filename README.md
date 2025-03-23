@@ -2,7 +2,7 @@
 
 ![Lines of code](https://img.shields.io/tokei/lines/github/KassuK1/BlackOut?color=blue&label=lines%20of%20code&style=for-the-badge)
 [![Discord](https://img.shields.io/discord/1020709439742947380?color=blue&label=Discord&logo=Discord&style=for-the-badge)](https://discord.gg/mmWz9Dz4Y9)
-[![Downloads](https://img.shields.io/github/downloads/KassuK1/BlackOut/total?color=blueviolet&style=for-the-badge)](https://github.com/KassuK1/BlackOut/releases)
+[![Downloads](https://img.shields.io/github/downloads/KassuK1/BlackOut/total?color=blueviolet&style=for-the-badge)](https://github.com/gbovv/BlackOut/releases)
 
 # Blackout
 一个 Meteor 客户端的插件，为 Meteor 客户端添加了各种新的/改进的功能 例如全新改进的 CrystalAura、BedAura 和 PacketFly 以及更多新事物，让您在竞争中脱颖而出。
