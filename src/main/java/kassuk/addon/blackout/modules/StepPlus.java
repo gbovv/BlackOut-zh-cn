@@ -22,26 +22,26 @@ import java.util.List;
 
 public class StepPlus extends BlackOutModule {
     public StepPlus() {
-        super(BlackOut.BLACKOUT, "Step+", "Step but works.");
+        super(BlackOut.BLACKOUT, "步进增强", "智能高度调整模块");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<Boolean> slow = sgGeneral.add(new BoolSetting.Builder()
-        .name("Slow")
-        .description("Moves up slowly to prevent lagbacks.")
+        .name("缓升模式")
+        .description("缓慢上升以避免服务器回弹")
         .defaultValue(false)
         .build()
     );
     private final Setting<Boolean> strict = sgGeneral.add(new BoolSetting.Builder()
-        .name("Strict")
-        .description("Strict 2b2tpvp step.")
+        .name("严格模式")
+        .description("遵循2b2t服务器特性的步进逻辑")
         .defaultValue(false)
         .build()
     );
     public final Setting<Double> height = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Height")
-        .description("Starts stepping if target block can be reached in x movement ticks.")
+        .name("触发高度")
+        .description("可到达目标方块时触发步进（块）")
         .defaultValue(2.5)
         .min(0.6)
         .sliderRange(0.6, 2.5)
@@ -49,8 +49,8 @@ public class StepPlus extends BlackOutModule {
         .build()
     );
     public final Setting<Double> cooldown = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Cooldown")
-        .description("Waits x seconds between steps.")
+        .name("冷却时间")
+        .description("两次步进之间的冷却时间（秒）")
         .defaultValue(0.25)
         .min(0)
         .sliderRange(0, 1)

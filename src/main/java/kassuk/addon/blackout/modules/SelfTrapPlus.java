@@ -44,9 +44,9 @@ public class SelfTrapPlus extends BlackOutModule {
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgPlacing = settings.createGroup("Placing");
-    private final SettingGroup sgToggle = settings.createGroup("Toggle");
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgPlacing = settings.createGroup("放置");
+    private final SettingGroup sgToggle = settings.createGroup("切换");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
     //--------------------General--------------------//
     private final Setting<Boolean> pauseEat = sgGeneral.add(new BoolSetting.Builder()
@@ -137,7 +137,7 @@ public class SelfTrapPlus extends BlackOutModule {
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
@@ -316,7 +316,7 @@ public class SelfTrapPlus extends BlackOutModule {
                         for (int i = 0; i < Math.min(obsidian, toPlace.size()); i++) {
                             PlaceData placeData = onlyConfirmed.get() ? SettingUtils.getPlaceData(toPlace.get(i)) : SettingUtils.getPlaceDataOR(toPlace.get(i), placed::contains);
                             if (placeData.valid()) {
-                                boolean rotated = !SettingUtils.shouldRotate(RotationType.BlockPlace) || Managers.ROTATION.start(placeData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "placing"));
+                                boolean rotated = !SettingUtils.shouldRotate(RotationType.方块放置) || Managers.ROTATION.start(placeData.pos(), priority, RotationType.方块放置, Objects.hash(name + "placing"));
 
                                 if (!rotated) {
                                     break;
@@ -359,7 +359,7 @@ public class SelfTrapPlus extends BlackOutModule {
 
         if (placeSwing.get()) clientSwing(placeHand.get(), hand);
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) {
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) {
             Managers.ROTATION.end(Objects.hash(name + "placing"));
         }
     }

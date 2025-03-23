@@ -17,26 +17,26 @@ import net.minecraft.registry.tag.FluidTags;
 
 public class JesusPlus extends BlackOutModule {
     public JesusPlus() {
-        super(BlackOut.BLACKOUT, "Jesus+", "Better jesus");
+        super(BlackOut.BLACKOUT, "水上行走增强", "流体表面移动优化模块");
     }
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> bob = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Bob force")
-        .description("Use 0.005 or 0.1")
+        .name("浮力强度")
+        .description("推荐使用0.005（流体悬浮）或0.1（熔岩行走）")
         .defaultValue(0.005)
         .min(0)
         .sliderMax(1)
         .build()
     );
     private final  Setting<Boolean> toggle = sgGeneral.add(new BoolSetting.Builder()
-        .name("Change speed")
-        .description("")
+        .name("动态调速")
+        .description("根据环境动态调整移动速度")
         .build()
     );
     private final Setting<Double> water_speed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Water speed")
-        .description("0.265 is generally better")
+        .name("移动倍率")
+        .description("基础速度调整倍率（0.265适用于多数情况）")
         .defaultValue(1.175)
         .min(0)
         .sliderMax(2)

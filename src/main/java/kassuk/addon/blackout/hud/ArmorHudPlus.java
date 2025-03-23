@@ -21,24 +21,24 @@ public class ArmorHudPlus extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Scale")
-        .description("Scale to render at.")
+        .name("缩放比例")
+        .description("渲染时的缩放比例")
         .defaultValue(1)
         .range(0, 5)
         .sliderRange(0, 5)
         .build()
     );
     private final Setting<Integer> rounding = sgGeneral.add(new IntSetting.Builder()
-        .name("Rounding")
-        .description("How rounded should the background be.")
+        .name("圆角程度")
+        .description("背景的圆角程度")
         .defaultValue(50)
         .range(0, 100)
         .sliderRange(0, 100)
         .build()
     );
     private final Setting<Boolean> bg = sgGeneral.add(new BoolSetting.Builder()
-        .name("Background")
-        .description("Renders a background behind armor pieces.")
+        .name("显示背景")
+        .description("在护甲图标后显示背景")
         .defaultValue(false)
         .build()
     );
@@ -55,8 +55,8 @@ public class ArmorHudPlus extends HudElement {
         .build()
     );
     private final Setting<DurMode> durMode = sgGeneral.add(new EnumSetting.Builder<DurMode>()
-        .name("Durability Mode")
-        .description("Where should durability be rendered at.")
+        .name("耐久度模式")
+        .description("耐久度数值的显示位置")
         .defaultValue(DurMode.Bottom)
         .build()
     );

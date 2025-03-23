@@ -181,7 +181,7 @@ public class PistonCrystal extends BlackOutModule {
     private final Setting<SwingHand> crystalHand = sgSwing.add(new EnumSetting.Builder<SwingHand>()
         .name("Crystal Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(crystalSwing::get)
         .build()
     );
@@ -194,7 +194,7 @@ public class PistonCrystal extends BlackOutModule {
     private final Setting<SwingHand> attackHand = sgSwing.add(new EnumSetting.Builder<SwingHand>()
         .name("Attack Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(attackSwing::get)
         .build()
     );
@@ -207,7 +207,7 @@ public class PistonCrystal extends BlackOutModule {
     private final Setting<SwingHand> pistonHand = sgSwing.add(new EnumSetting.Builder<SwingHand>()
         .name("Piston Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(pistonSwing::get)
         .build()
     );
@@ -220,7 +220,7 @@ public class PistonCrystal extends BlackOutModule {
     private final Setting<SwingHand> redstoneHand = sgSwing.add(new EnumSetting.Builder<SwingHand>()
         .name("Redstone Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(redstoneSwing::get)
         .build()
     );
@@ -233,7 +233,7 @@ public class PistonCrystal extends BlackOutModule {
     private final Setting<SwingHand> fireHand = sgSwing.add(new EnumSetting.Builder<SwingHand>()
         .name("Fire Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(fireSwing::get)
         .build()
     );
@@ -474,15 +474,15 @@ public class PistonCrystal extends BlackOutModule {
 
         if (crystal == null) return;
 
-        if (SettingUtils.shouldRotate(RotationType.Attacking) && !Managers.ROTATION.start(crystal.getBoundingBox(), priority - 0.1, RotationType.Attacking, Objects.hash(name + "attacking"))) return;
+        if (SettingUtils.shouldRotate(RotationType.攻击) && !Managers.ROTATION.start(crystal.getBoundingBox(), priority - 0.1, RotationType.攻击, Objects.hash(name + "attacking"))) return;
 
         if (System.currentTimeMillis() - lastAttack < 1000 / attackSpeed.get()) return;
 
-        SettingUtils.swing(SwingState.Pre, SwingType.Attacking, Hand.MAIN_HAND);
+        SettingUtils.swing(SwingState.Pre, SwingType.攻击, Hand.MAIN_HAND);
         sendPacket(PlayerInteractEntityC2SPacket.attack(crystal, mc.player.isSneaking()));
-        SettingUtils.swing(SwingState.Post, SwingType.Attacking, Hand.MAIN_HAND);
+        SettingUtils.swing(SwingState.Post, SwingType.攻击, Hand.MAIN_HAND);
 
-        if (SettingUtils.shouldRotate(RotationType.Attacking)) Managers.ROTATION.end(Objects.hash(name + "attacking"));
+        if (SettingUtils.shouldRotate(RotationType.攻击)) Managers.ROTATION.end(Objects.hash(name + "attacking"));
 
         if (attackSwing.get()) clientSwing(attackHand.get(), Hand.MAIN_HAND);
 
@@ -506,7 +506,7 @@ public class PistonCrystal extends BlackOutModule {
 
         if (!available) return;
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(pistonData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "piston"))) return;
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(pistonData.pos(), priority, RotationType.方块放置, Objects.hash(name + "piston"))) return;
 
         boolean switched = false;
 
@@ -529,7 +529,7 @@ public class PistonCrystal extends BlackOutModule {
 
         placeBlock(hand, pistonData.pos().toCenterPos(), pistonData.dir(), pistonData.pos());
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "piston"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "piston"));
         if (pistonSwing.get()) clientSwing(pistonHand.get(), hand);
 
         pistonTime = System.currentTimeMillis();
@@ -565,7 +565,7 @@ public class PistonCrystal extends BlackOutModule {
 
         if (!available) return;
 
-        if (SettingUtils.shouldRotate(RotationType.Interact) && !Managers.ROTATION.start(crystalPos.down(), priority, RotationType.Interact, Objects.hash(name + "crystal"))) return;
+        if (SettingUtils.shouldRotate(RotationType.交互) && !Managers.ROTATION.start(crystalPos.down(), priority, RotationType.交互, Objects.hash(name + "crystal"))) return;
 
         boolean switched = false;
 
@@ -586,7 +586,7 @@ public class PistonCrystal extends BlackOutModule {
 
         interactBlock(hand, crystalPos.down().toCenterPos(), crystalPlaceDir, crystalPos.down());
 
-        if (SettingUtils.shouldRotate(RotationType.Interact)) Managers.ROTATION.end(Objects.hash(name + "crystal"));
+        if (SettingUtils.shouldRotate(RotationType.交互)) Managers.ROTATION.end(Objects.hash(name + "crystal"));
         if (crystalSwing.get()) clientSwing(crystalHand.get(), hand);
 
         crystalTime = System.currentTimeMillis();
@@ -619,7 +619,7 @@ public class PistonCrystal extends BlackOutModule {
 
         if (!available) return;
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(redstoneData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "redstone"))) return;
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(redstoneData.pos(), priority, RotationType.方块放置, Objects.hash(name + "redstone"))) return;
 
         boolean switched = false;
 
@@ -640,7 +640,7 @@ public class PistonCrystal extends BlackOutModule {
 
         placeBlock(hand, redstoneData.pos().toCenterPos(), redstoneData.dir(), redstoneData.pos());
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "redstone"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "redstone"));
         if (redstoneSwing.get()) clientSwing(redstoneHand.get(), hand);
 
         redstoneTime = System.currentTimeMillis();
@@ -722,7 +722,7 @@ public class PistonCrystal extends BlackOutModule {
 
         if (!available) return;
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(data.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "fire"))) return;
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(data.pos(), priority, RotationType.方块放置, Objects.hash(name + "fire"))) return;
 
         boolean switched = false;
 
@@ -743,7 +743,7 @@ public class PistonCrystal extends BlackOutModule {
 
         interactBlock(hand, data.pos().toCenterPos(), data.dir(), data.pos());
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "fire"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "fire"));
         if (fireSwing.get()) clientSwing(fireHand.get(), hand);
 
         firePlaced = true;

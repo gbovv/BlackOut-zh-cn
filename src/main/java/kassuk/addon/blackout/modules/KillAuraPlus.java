@@ -33,61 +33,61 @@ import java.util.Objects;
 
 public class KillAuraPlus extends BlackOutModule {
     public KillAuraPlus() {
-        super(BlackOut.BLACKOUT, "Kill Aura+", "Better kill aura. Made for crystal pvp.");
+        super(BlackOut.BLACKOUT, "杀戮光环+", "强化版攻击模块，专为水晶PVP设计");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<TargetMode> targetMode = sgGeneral.add(new EnumSetting.Builder<TargetMode>()
-        .name("Target Mode")
-        .description("Which opponent should be targeted.")
+        .name("目标模式")
+        .description("选择优先攻击的目标类型")
         .defaultValue(TargetMode.Health)
         .build()
     );
     private final Setting<Integer> maxHp = sgGeneral.add(new IntSetting.Builder()
-        .name("Max HP")
-        .description("Target's health must be under this value.")
+        .name("最大生命值")
+        .description("目标生命值必须低于此值")
         .defaultValue(36)
         .min(0)
         .sliderMax(36)
         .build()
     );
     private final Setting<Double> delay = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Delay")
-        .description("Delay that will be used for hits.")
+        .name("攻击间隔")
+        .description("每次攻击之间的延迟（秒）")
         .defaultValue(0.500)
         .min(0)
         .sliderMax(1)
         .build()
     );
     private final Setting<RotationMode> rotationMode = sgGeneral.add(new EnumSetting.Builder<RotationMode>()
-        .name("Rotation mode")
-        .description("When should we rotate. Only active if attack rotations are enabled in rotation settings.")
+        .name("旋转模式")
+        .description("攻击时的头部旋转时机（需在旋转设置中启用攻击旋转）")
         .defaultValue(RotationMode.OnHit)
         .build()
     );
     private final Setting<SwitchMode> switchMode = sgGeneral.add(new EnumSetting.Builder<SwitchMode>()
-        .name("Switch mode")
-        .description("Should be set to disabled.")
+        .name("切换模式")
+        .description("武器切换方式（建议保持禁用）")
         .defaultValue(SwitchMode.Disabled)
         .build()
     );
     private final Setting<Boolean> onlyWeapon = sgGeneral.add(new BoolSetting.Builder()
-        .name("Only Weapon")
-        .description("Only attacks with a weapon.")
+        .name("仅限武器")
+        .description("只使用剑或斧进行攻击")
         .defaultValue(true)
         .build()
     );
     private final Setting<Boolean> swing = sgGeneral.add(new BoolSetting.Builder()
-        .name("Swing")
-        .description("Renders swing animation when attacking an entity.")
+        .name("挥动动画")
+        .description("攻击实体时渲染武器挥动动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> swingHand = sgGeneral.add(new EnumSetting.Builder<SwingHand>()
-        .name("Swing Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("挥动手部")
+        .description("选择要渲染动画的手部")
+        .defaultValue(SwingHand.真实手持)
         .visible(swing::get)
         .build()
     );
@@ -123,13 +123,13 @@ public class KillAuraPlus extends BlackOutModule {
             return;
         }
 
-        boolean rotated = rotationMode.get() != RotationMode.Constant || !SettingUtils.shouldRotate(RotationType.Attacking) || Managers.ROTATION.start(target.getBoundingBox(), priority, RotationType.Attacking, Objects.hash(name + "attacking"));
+        boolean rotated = rotationMode.get() != RotationMode.Constant || !SettingUtils.shouldRotate(RotationType.攻击) || Managers.ROTATION.start(target.getBoundingBox(), priority, RotationType.攻击, Objects.hash(name + "attacking"));
 
         if (!rotated || timer < delay.get()) {
             return;
         }
 
-        rotated = rotationMode.get() != RotationMode.OnHit || !SettingUtils.shouldRotate(RotationType.Attacking) || Managers.ROTATION.start(target.getBoundingBox(), priority, RotationType.Attacking, Objects.hash(name + "attacking"));
+        rotated = rotationMode.get() != RotationMode.OnHit || !SettingUtils.shouldRotate(RotationType.攻击) || Managers.ROTATION.start(target.getBoundingBox(), priority, RotationType.攻击, Objects.hash(name + "attacking"));
 
         if (!rotated) {
             return;
@@ -181,11 +181,11 @@ public class KillAuraPlus extends BlackOutModule {
     private void attackTarget() {
         timer = 0;
 
-        SettingUtils.swing(SwingState.Pre, SwingType.Attacking, Hand.MAIN_HAND);
+        SettingUtils.swing(SwingState.Pre, SwingType.攻击, Hand.MAIN_HAND);
 
         sendPacket(PlayerInteractEntityC2SPacket.attack(target, mc.player.isSneaking()));
 
-        SettingUtils.swing(SwingState.Post, SwingType.Attacking, Hand.MAIN_HAND);
+        SettingUtils.swing(SwingState.Post, SwingType.攻击, Hand.MAIN_HAND);
         if (swing.get()) clientSwing(swingHand.get(), Hand.MAIN_HAND);
     }
 

@@ -19,14 +19,14 @@ import net.minecraft.util.math.BlockPos;
 
 public class Automation extends BlackOutModule {
     public Automation() {
-        super(BlackOut.BLACKOUT, "Automation", "Automatically enables modules in certain situations.");
+        super(BlackOut.BLACKOUT, "自动化", "在特定情况下自动启用其他模块功能");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Boolean> holeSurround = sgGeneral.add(new BoolSetting.Builder()
-        .name("Hole Surround")
-        .description("Enables surround when you enter a hole.")
+        .name("洞穴环绕")
+        .description("进入方块洞穴时自动启用环绕功能") 
         .defaultValue(true)
         .build()
     );

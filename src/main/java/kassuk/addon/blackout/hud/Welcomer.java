@@ -18,22 +18,22 @@ public class Welcomer extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Scale")
-        .description("Scale to render at.")
+        .name("界面缩放比例")
+        .description("调整整个界面的显示比例大小")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
         .build()
     );
     private final Setting<SettingColor> textColor = sgGeneral.add(new ColorSetting.Builder()
-        .name("Text Color")
+        .name("文本颜色")
         .description(BlackOut.COLOR)
         .defaultValue(new SettingColor(255, 255, 255, 255))
         .build()
     );
     private final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("Text Shadow")
-        .description("Should the text have a shadow.")
+        .name("文字阴影")
+        .description("在文字后方显示阴影效果")
         .defaultValue(true)
         .build()
     );

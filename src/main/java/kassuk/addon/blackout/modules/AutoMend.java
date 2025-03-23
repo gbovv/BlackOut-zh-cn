@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class AutoMend extends BlackOutModule {
     public AutoMend() {
-        super(BlackOut.BLACKOUT, "Auto Mend", "Automatically mends your armor with experience bottles.");
+        super(BlackOut.BLACKOUT, "自动修复", "使用经验瓶自动修复护甲耐久");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -40,52 +40,52 @@ public class AutoMend extends BlackOutModule {
 
     //--------------------General--------------------//
     private final Setting<Boolean> antiCharity = sgGeneral.add(new BoolSetting.Builder()
-        .name("Anti Charity")
-        .description("Doesn't mend if any enemy is at same position.")
+        .name("防慈善")
+        .description("当有敌人在同一位置时不进行修复")
         .defaultValue(true)
         .build()
     );
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Throw Speed")
-        .description("How many bottles to throw every second. 20 is recommended.")
+        .name("投掷速度")
+        .description("每秒投掷的经验瓶数量（推荐20）")
         .defaultValue(20)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Integer> bottles = sgGeneral.add(new IntSetting.Builder()
-        .name("Bottles")
-        .description("Amount of bottles to throw every time.")
+        .name("投掷数量")
+        .description("每次投掷的经验瓶数量")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
         .build()
     );
     private final Setting<SwitchMode> switchMode = sgGeneral.add(new EnumSetting.Builder<SwitchMode>()
-        .name("Switch Mode")
-        .description("Method of switching. Silent is the most reliable.")
+        .name("切换模式")
+        .description("物品栏切换方式，静默切换最可靠")
         .defaultValue(SwitchMode.Silent)
         .build()
     );
     private final Setting<Integer> minDur = sgGeneral.add(new IntSetting.Builder()
-        .name("Min Durability")
-        .description("Uses experience if any armor piece is under this durability.")
+        .name("最小耐久")
+        .description("当任何护甲耐久低于此值时使用经验修复")
         .defaultValue(60)
         .range(0, 100)
         .sliderRange(0, 100)
         .build()
     );
     private final Setting<Integer> antiWaste = sgGeneral.add(new IntSetting.Builder()
-        .name("Anti Waste")
-        .description("Doesn't use experience if any armor piece is above this durability.")
+        .name("防浪费")
+        .description("当任何护甲耐久高于此值时停止使用经验")
         .defaultValue(90)
         .range(0, 100)
         .sliderRange(0, 100)
         .build()
     );
     private final Setting<Integer> forceMend = sgGeneral.add(new IntSetting.Builder()
-        .name("Force Mend")
-        .description("Ignores anti waste if any armor piece if under this durability.")
+        .name("强制修复")
+        .description("当护甲耐久低于此值时忽略防浪费设置")
         .defaultValue(30)
         .range(0, 100)
         .sliderRange(0, 100)
@@ -94,14 +94,14 @@ public class AutoMend extends BlackOutModule {
 
     //--------------------Pause--------------------//
     private final Setting<Boolean> autoCrystal = sgPause.add(new BoolSetting.Builder()
-        .name("Auto Crystal Pause")
-        .description("Only throws bottles if auto crystal isn't placing.")
+        .name("自动水晶暂停")
+        .description("当自动水晶未放置时投掷经验瓶")
         .defaultValue(false)
         .build()
     );
     private final Setting<Integer> autoCrystalTicks = sgPause.add(new IntSetting.Builder()
-        .name("Auto Crystal Ticks")
-        .description("How many ticks to wait after auto crystal places.")
+        .name("自动水晶延迟")
+        .description("自动水晶放置后的等待刻数")
         .defaultValue(20)
         .min(0)
         .sliderRange(0, 100)
@@ -109,14 +109,14 @@ public class AutoMend extends BlackOutModule {
         .build()
     );
     private final Setting<Boolean> surroundPause = sgPause.add(new BoolSetting.Builder()
-        .name("Surround Pause")
-        .description("Only throws bottles if surround is not placing.")
+        .name("环绕暂停")
+        .description("当环绕未放置时投掷经验瓶")
         .defaultValue(false)
         .build()
     );
     private final Setting<Integer> surroundTicks = sgPause.add(new IntSetting.Builder()
-        .name("Surround Ticks")
-        .description("How many ticks to wait after surround places.")
+        .name("环绕延迟")
+        .description("环绕放置后的等待刻数")
         .defaultValue(20)
         .min(0)
         .sliderRange(0, 100)
@@ -124,8 +124,8 @@ public class AutoMend extends BlackOutModule {
         .build()
     );
     private final Setting<Boolean> selfTrapPause = sgPause.add(new BoolSetting.Builder()
-        .name("Self Trap Pause")
-        .description("Only throws bottles if self trap is not placing.")
+        .name("自陷暂停")
+        .description("当自陷未放置时投掷经验瓶")
         .defaultValue(false)
         .build()
     );
@@ -139,8 +139,8 @@ public class AutoMend extends BlackOutModule {
         .build()
     );
     private final Setting<Boolean> movePause = sgPause.add(new BoolSetting.Builder()
-        .name("Move Pause")
-        .description("Only throws bottles if you aren't moving")
+        .name("移动暂停")
+        .description("仅在静止时投掷经验瓶")
         .defaultValue(true)
         .build()
     );
@@ -154,8 +154,8 @@ public class AutoMend extends BlackOutModule {
         .build()
     );
     private final Setting<Boolean> offGroundPause = sgPause.add(new BoolSetting.Builder()
-        .name("Off Ground Pause")
-        .description("Only throws bottles if not on ground.")
+        .name("离地暂停")
+        .description("仅在落地时投掷经验瓶")
         .defaultValue(false)
         .build()
     );
@@ -171,15 +171,15 @@ public class AutoMend extends BlackOutModule {
 
     //--------------------Render--------------------//
     private final Setting<Boolean> swing = sgRender.add(new BoolSetting.Builder()
-        .name("Swing")
-        .description("Renders swing animation when throwing an exp bottle.")
+        .name("挥动动画")
+        .description("投掷经验瓶时渲染挥动手部动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> swingHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Swing Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("挥动手部")
+        .description("选择要挥动的手部")
+        .defaultValue(SwingHand.真实手持)
         .visible(swing::get)
         .build()
     );

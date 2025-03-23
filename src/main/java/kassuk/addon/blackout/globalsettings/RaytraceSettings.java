@@ -17,53 +17,53 @@ import net.minecraft.world.RaycastContext;
 
 public class RaytraceSettings extends BlackOutModule {
     public RaytraceSettings() {
-        super(BlackOut.SETTINGS, "Raytrace", "Global raytrace settings for every blackout module.");
+        super(BlackOut.SETTINGS, "Raytrace", "所有Blackout模块的全局射线追踪设置");
     }
 
-    private final SettingGroup sgPlace = settings.createGroup("Placing");
-    private final SettingGroup sgAttack = settings.createGroup("Attacking");
+    private final SettingGroup sgPlace = settings.createGroup("放置");
+    private final SettingGroup sgAttack = settings.createGroup("攻击");
 
     //--------------------Place-Settings--------------------//
     public final Setting<Boolean> placeTrace = sgPlace.add(new BoolSetting.Builder()
-        .name("Place Traces")
-        .description("Raytraces when placing.")
+        .name("放置追踪")
+        .description("放置时进行射线追踪。")
         .defaultValue(false)
         .build()
     );
     private final Setting<PlaceTraceMode> placeMode = sgPlace.add(new EnumSetting.Builder<PlaceTraceMode>()
-        .name("Place Mode")
-        .description("Place trace mode.")
+        .name("放置模式")
+        .description("放置追踪的检测模式")
         .defaultValue(PlaceTraceMode.SinglePoint)
         .visible(placeTrace::get)
         .build()
     );
     private final Setting<Double> placeHeight = sgPlace.add(new DoubleSetting.Builder()
-        .name("Place Height")
-        .description("Raytraces to x blocks above the bottom.")
+        .name("放置高度")
+        .description("从方块底部向上追踪的基准高度")
         .defaultValue(0.5)
         .sliderRange(-2, 2)
         .visible(() -> placeMode.get() == PlaceTraceMode.SinglePoint && placeTrace.get())
         .build()
     );
     private final Setting<Double> placeHeight1 = sgPlace.add(new DoubleSetting.Builder()
-        .name("Place Height 1")
-        .description("Raytraces to x blocks above the bottom.")
+        .name("放置高度1")
+        .description("光线跟踪到底部上方 x 个区块.")
         .defaultValue(0.25)
         .sliderRange(-2, 1.5)
         .visible(() -> placeMode.get() == PlaceTraceMode.DoublePoint && placeTrace.get())
         .build()
     );
     private final Setting<Double> placeHeight2 = sgPlace.add(new DoubleSetting.Builder()
-        .name("Place Height 2")
-        .description("Raytraces to x blocks above the bottom.")
+        .name("放置高度2")
+        .description("从方块底部向上追踪 x 个方块的高度。")
         .defaultValue(0.75)
         .sliderRange(-2, 2)
         .visible(() -> placeMode.get() == PlaceTraceMode.DoublePoint && placeTrace.get())
         .build()
     );
     private final Setting<Double> exposure = sgPlace.add(new DoubleSetting.Builder()
-        .name("Place Exposure")
-        .description("How many % of the block should be seen.")
+        .name("放置暴露度")
+        .description("需要看到的方块部分百分比。")
         .defaultValue(50)
         .range(0, 100)
         .sliderRange(0, 100)
@@ -73,45 +73,45 @@ public class RaytraceSettings extends BlackOutModule {
 
     //--------------------Place-Settings--------------------//
     public final Setting<Boolean> attackTrace = sgAttack.add(new BoolSetting.Builder()
-        .name("Attack Traces")
-        .description("Raytraces when attacking.")
+        .name("攻击追踪")
+        .description("攻击时进行射线追踪")
         .defaultValue(false)
         .build()
     );
     private final Setting<AttackTraceMode> attackMode = sgAttack.add(new EnumSetting.Builder<AttackTraceMode>()
-        .name("Attack Mode")
-        .description("Attack trace mode.")
+        .name("攻击模式")
+        .description("攻击追踪的检测模式")
         .defaultValue(AttackTraceMode.SinglePoint)
         .visible(attackTrace::get)
         .build()
     );
     private final Setting<Double> attackHeight = sgAttack.add(new DoubleSetting.Builder()
-        .name("Attack Height")
-        .description("Raytraces to x blocks above the bottom.")
+        .name("攻击高度")
+        .description("从实体底部向上追踪 x 个方块的高度。")
         .defaultValue(1.5)
         .sliderRange(-2, 2)
         .visible(() -> attackMode.get().equals(AttackTraceMode.SinglePoint) && attackTrace.get())
         .build()
     );
     private final Setting<Double> attackHeight1 = sgAttack.add(new DoubleSetting.Builder()
-        .name("Attack Height 1")
-        .description("Raytraces to x * hitbox height above the bottom.")
+        .name("攻击高度1")
+        .description("根据实体碰撞箱高度的 x 倍向上追踪")
         .defaultValue(0.5)
         .sliderRange(-2, 2)
         .visible(() -> attackMode.get().equals(AttackTraceMode.DoublePoint) && attackTrace.get())
         .build()
     );
     private final Setting<Double> attackHeight2 = sgAttack.add(new DoubleSetting.Builder()
-        .name("Attack Height 2")
-        .description("Raytraces to x * hitbox height above the bottom.")
+        .name("攻击高度2")
+        .description("根据实体碰撞箱高度的 x 倍向上追踪")
         .defaultValue(0.5)
         .sliderRange(-2, 2)
         .visible(() -> attackMode.get().equals(AttackTraceMode.DoublePoint) && attackTrace.get())
         .build()
     );
     private final Setting<Double> attackExposure = sgAttack.add(new DoubleSetting.Builder()
-        .name("Attack Exposure")
-        .description("How many % of the entity should be seen.")
+        .name("攻击暴露度")
+        .description("需要看到的实体部分百分比。")
         .defaultValue(50)
         .range(0, 100)
         .sliderRange(0, 100)

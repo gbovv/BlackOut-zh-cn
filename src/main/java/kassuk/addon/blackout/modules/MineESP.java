@@ -23,23 +23,23 @@ import java.util.List;
 
 public class MineESP extends BlackOutModule {
     public MineESP() {
-        super(BlackOut.BLACKOUT, "Mine ESP,", "Renders a box at blocks being mined by other players.");
+        super(BlackOut.BLACKOUT, "矿物追踪增强", "高亮显示其他玩家正在挖掘的方块");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final SettingGroup sgRender = settings.createGroup("Render");
 
     private final Setting<Double> range = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Range")
-        .description("Only renders inside this range.")
+        .name("检测范围")
+        .description("方框渲染的最大距离（米）")
         .defaultValue(10)
         .min(0)
         .sliderRange(0, 50)
         .build()
     );
     private final Setting<Double> maxTime = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Max Time")
-        .description("Removes rendered box after this time.")
+        .name("显示时长")
+        .description("方框渲染的最长时间（秒）")
         .defaultValue(10)
         .min(0)
         .sliderRange(0, 50)
@@ -48,20 +48,20 @@ public class MineESP extends BlackOutModule {
 
     //--------------------Render--------------------//
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("Shape Mode")
-        .description("Which parts of boxes should be rendered.")
+        .name("渲染模式")
+        .description("选择方框的渲染部分")
         .defaultValue(ShapeMode.Both)
         .build()
     );
     public final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("Line Color")
-        .description("Color of the outline.")
+        .name("边框颜色")
+        .description("方框轮廓颜色（含透明度）")
         .defaultValue(new SettingColor(255, 0, 0, 255))
         .build()
     );
     public final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
-        .name("Side Color")
-        .description("Color of the sides.")
+        .name("填充颜色")
+        .description("方框表面颜色（含透明度）")
         .defaultValue(new SettingColor(255, 0, 0, 50))
         .build()
     );

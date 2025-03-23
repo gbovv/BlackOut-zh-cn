@@ -18,22 +18,22 @@ public class OnTope extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
-        .name("Color")
+        .name("文本颜色")
         .description(BlackOut.COLOR)
         .defaultValue(new SettingColor(255, 255, 255, 255))
         .build()
     );
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Scale")
-        .description("Modify the size of the text.")
+        .name("文本缩放比例")
+        .description("调整文本的显示大小")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
         .build()
     );
     private final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("Text Shadow")
-        .description("Should the text have a shadow.")
+        .name("文字阴影")
+        .description("在文字后方显示阴影效果")
         .defaultValue(true)
         .build()
     );

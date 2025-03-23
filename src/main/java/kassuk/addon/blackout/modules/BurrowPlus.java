@@ -95,7 +95,7 @@ public class BurrowPlus extends BlackOutModule {
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
@@ -133,7 +133,7 @@ public class BurrowPlus extends BlackOutModule {
 
         if (!blocksPresent) return;
 
-        boolean rotated = instaRot.get() || !SettingUtils.shouldRotate(RotationType.BlockPlace) || Managers.ROTATION.startPitch(90, priority, RotationType.BlockPlace, Objects.hash(name + "placing"));
+        boolean rotated = instaRot.get() || !SettingUtils.shouldRotate(RotationType.方块放置) || Managers.ROTATION.startPitch(90, priority, RotationType.方块放置, Objects.hash(name + "placing"));
         if (!rotated) return;
 
         boolean switched = hand != null;
@@ -152,7 +152,7 @@ public class BurrowPlus extends BlackOutModule {
             return;
         }
 
-        if (instaRot.get() && SettingUtils.shouldRotate(RotationType.BlockPlace)) {
+        if (instaRot.get() && SettingUtils.shouldRotate(RotationType.方块放置)) {
             sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(Managers.ROTATION.lastDir[0], 90, Managers.ON_GROUND.isOnGround()));
         }
 
@@ -167,7 +167,7 @@ public class BurrowPlus extends BlackOutModule {
         }
 
         placeBlock(Hand.MAIN_HAND, mc.player.getBlockPos().down().toCenterPos(), Direction.UP, mc.player.getBlockPos().down());
-        if (!instaRot.get() && SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "placing"));
+        if (!instaRot.get() && SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "placing"));
 
         if (placeSwing.get()) clientSwing(placeHand.get(), Hand.MAIN_HAND);
 

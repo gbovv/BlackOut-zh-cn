@@ -51,68 +51,68 @@ import java.util.function.Predicate;
 
 public class AutoCrystalPlus extends BlackOutModule {
     public AutoCrystalPlus() {
-        super(BlackOut.BLACKOUT, "Auto Crystal+", "Breaks and places crystals automatically (but better).");
+        super(BlackOut.BLACKOUT, "自动水晶+", "自动放置并破坏水晶（优化版）.");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgPlace = settings.createGroup("Place");
-    private final SettingGroup sgExplode = settings.createGroup("Explode");
-    private final SettingGroup sgSwitch = settings.createGroup("Switch");
-    private final SettingGroup sgDamage = settings.createGroup("Damage");
-    private final SettingGroup sgID = settings.createGroup("ID Predict");
-    private final SettingGroup sgExtrapolation = settings.createGroup("Extrapolation");
-    private final SettingGroup sgRender = settings.createGroup("Render");
-    private final SettingGroup sgCompatibility = settings.createGroup("Compatibility");
-    private final SettingGroup sgDebug = settings.createGroup("Debug");
+    private final SettingGroup sgPlace = settings.createGroup("放置");
+    private final SettingGroup sgExplode = settings.createGroup("爆炸");
+    private final SettingGroup sgSwitch = settings.createGroup("切换");
+    private final SettingGroup sgDamage = settings.createGroup("伤害计算");
+    private final SettingGroup sgID = settings.createGroup("ID预测");
+    private final SettingGroup sgExtrapolation = settings.createGroup("外推");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
+    private final SettingGroup sgCompatibility = settings.createGroup("兼容性");
+    private final SettingGroup sgDebug = settings.createGroup("调试");
 
     //--------------------General--------------------//
     private final Setting<Boolean> place = sgGeneral.add(new BoolSetting.Builder()
-        .name("Place")
-        .description("Places crystals.")
+        .name("放置水晶")
+        .description("自动放置末影水晶")
         .defaultValue(true)
         .build()
     );
     private final Setting<Boolean> explode = sgGeneral.add(new BoolSetting.Builder()
-        .name("Explode")
-        .description("Explodes crystals.")
+        .name("破坏水晶")
+        .description("自动攻击末影水晶")
         .defaultValue(true)
         .build()
     );
     private final Setting<Boolean> pauseEat = sgGeneral.add(new BoolSetting.Builder()
-        .name("Pause Eat")
-        .description("Pauses while eating.")
+        .name("进食暂停")
+        .description("进食时暂停模块功能")
         .defaultValue(false)
         .build()
     );
     private final Setting<Boolean> performance = sgGeneral.add(new BoolSetting.Builder()
-        .name("Performance Mode")
-        .description("Doesn't calculate placements as often.")
+        .name("性能模式")
+        .description("减少计算频率以提升运行效率")
         .defaultValue(false)
         .build()
     );
     private final Setting<Boolean> smartRot = sgGeneral.add(new BoolSetting.Builder()
-        .name("Smart Rotations")
-        .description("Looks at the top of placement block to make the ca faster.")
+        .name("智能旋转")
+        .description("通过注视方块顶部提升计算速度")
         .defaultValue(true)
         .build()
     );
     private final Setting<Boolean> ignoreTerrain = sgGeneral.add(new BoolSetting.Builder()
-        .name("Ignore Terrain")
-        .description("Spams trough terrain to kill your enemy.")
+        .name("无视地形")
+        .description("穿透地形进行攻击以击杀敌人")
         .defaultValue(true)
         .build()
     );
 
     //--------------------Place--------------------//
     private final Setting<Boolean> instantPlace = sgPlace.add(new BoolSetting.Builder()
-        .name("Instant Place")
-        .description("Ignores delay after crystal has disappeared.")
+        .name("即时放置")
+        .description("水晶消失后立即放置，忽略冷却时间")
         .defaultValue(true)
         .build()
     );
     private final Setting<Double> speedLimit = sgPlace.add(new DoubleSetting.Builder()
-        .name("Speed Limit")
-        .description("Maximum amount of place packets every second. 0 = no limit.")
+        .name("速度限制")
+        .description("每秒最大放置数据包数量 (0 表示无限制)")
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 20)
@@ -120,22 +120,22 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> placeSpeed = sgPlace.add(new DoubleSetting.Builder()
-        .name("Place Speed")
-        .description("How many times should the module place per second.")
+        .name("放置频率")
+        .description("模块每秒尝试放置水晶的次数")
         .defaultValue(10)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<DelayMode> placeDelayMode = sgPlace.add(new EnumSetting.Builder<DelayMode>()
-        .name("Place Delay Mode")
-        .description("Should we count the delay in seconds or ticks.")
+        .name("放置延迟模式")
+        .description("延迟计算方式：秒或游戏刻")
         .defaultValue(DelayMode.Seconds)
         .build()
     );
     private final Setting<Double> placeDelay = sgPlace.add(new DoubleSetting.Builder()
-        .name("Place Delay")
-        .description("How many seconds after attacking a crystal should we place.")
+        .name("放置延迟")
+        .description("攻击水晶后等待多少秒再进行放置")
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 1)
@@ -143,8 +143,8 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Integer> placeDelayTicks = sgPlace.add(new IntSetting.Builder()
-        .name("Place Delay Ticks")
-        .description("How many ticks should the crystal exist before attacking.")
+        .name("放置延迟刻数")
+        .description("水晶存在多少游戏刻后才进行攻击")
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 20)
@@ -152,16 +152,16 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> slowDamage = sgPlace.add(new DoubleSetting.Builder()
-        .name("Slow Damage")
-        .description("Switches to slow speed when the target would take under this amount of damage.")
+        .name("低速伤害阈值")
+        .description("当目标承受伤害低于此值时切换至低速模式")
         .defaultValue(3)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> slowSpeed = sgPlace.add(new DoubleSetting.Builder()
-        .name("Slow Speed")
-        .description("How many times should the module place per second when damage is under slow damage.")
+        .name("低速频率")
+        .description("伤害低于阈值时模块的每秒放置次数")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 20)
@@ -170,26 +170,26 @@ public class AutoCrystalPlus extends BlackOutModule {
 
     //--------------------Explode--------------------//
     private final Setting<Boolean> onlyOwn = sgExplode.add(new BoolSetting.Builder()
-        .name("Only Own")
-        .description("Only attacks own crystals.")
+        .name("仅攻击己方")
+        .description("只攻击自己放置的水晶")
         .defaultValue(false)
         .build()
     );
     private final Setting<Boolean> inhibit = sgExplode.add(new BoolSetting.Builder()
-        .name("Inhibit")
-        .description("Stops targeting attacked crystals.")
+        .name("存在时间模式")
+        .description("水晶存在时间的计算方式：秒或游戏刻")
         .defaultValue(false)
         .build()
     );
     private final Setting<DelayMode> existedMode = sgExplode.add(new EnumSetting.Builder<DelayMode>()
-        .name("Existed Mode")
-        .description("Should crystal existed times be counted in seconds or ticks.")
+        .name("存在时间模式")
+        .description("水晶存在时间的计算方式：秒或游戏刻")
         .defaultValue(DelayMode.Seconds)
         .build()
     );
     private final Setting<Double> existed = sgExplode.add(new DoubleSetting.Builder()
-        .name("Existed")
-        .description("How many seconds should the crystal exist before attacking.")
+        .name("存在时间(秒)")
+        .description("攻击前水晶需存在的最小秒数")
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 1)
@@ -197,8 +197,8 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Integer> existedTicks = sgExplode.add(new IntSetting.Builder()
-        .name("Existed Ticks")
-        .description("How many ticks should the crystal exist before attacking.")
+        .name("存在时间(刻)")
+        .description("攻击前水晶需存在的最小游戏刻数")
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 20)
@@ -206,20 +206,20 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<SequentialMode> sequential = sgExplode.add(new EnumSetting.Builder<SequentialMode>()
-        .name("Sequential")
-        .description("Doesn't place and attack during the same tick.")
+        .name("顺序模式")
+        .description("同一游戏刻内不进行放置和攻击操作")
         .defaultValue(SequentialMode.Disabled)
         .build()
     );
     private final Setting<Boolean> instantAttack = sgExplode.add(new BoolSetting.Builder()
-        .name("Instant Attack")
-        .description("Delay isn't calculated for first attack.")
+        .name("即时攻击")
+        .description("首次攻击不计算延迟时间")
         .defaultValue(true)
         .build()
     );
     private final Setting<Double> expSpeedLimit = sgExplode.add(new DoubleSetting.Builder()
-        .name("Explode Speed Limit")
-        .description("How many times to hit any crystal each second. 0 = no limit")
+        .name("爆炸速度限制")
+        .description("每秒最多攻击次数 (0 表示无限制)")
         .defaultValue(0)
         .min(0)
         .sliderRange(0, 20)
@@ -227,22 +227,22 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> expSpeed = sgExplode.add(new DoubleSetting.Builder()
-        .name("Explode Speed")
-        .description("How many times to hit crystal each second.")
+        .name("爆炸频率") 
+        .description("模块每秒尝试攻击水晶的次数")
         .defaultValue(4)
         .range(0.01, 20)
         .sliderRange(0.01, 20)
         .build()
     );
     private final Setting<Boolean> setDead = sgExplode.add(new BoolSetting.Builder()
-        .name("Set Dead")
-        .description("Hides the crystal after hitting it. Not needed since the module already is smart enough.")
+        .name("隐藏水晶")
+        .description("攻击后隐藏水晶实体（通常无需启用）")
         .defaultValue(false)
         .build()
     );
     private final Setting<Double> setDeadDelay = sgExplode.add(new DoubleSetting.Builder()
-        .name("Set Dead Delay")
-        .description("How long after hitting should the crystal disappear.")
+        .name("隐藏延迟")
+        .description("攻击后等待多少秒隐藏水晶")
         .defaultValue(0.05)
         .range(0, 1)
         .sliderRange(0, 1)
@@ -252,14 +252,14 @@ public class AutoCrystalPlus extends BlackOutModule {
 
     //--------------------Switch--------------------//
     private final Setting<SwitchMode> switchMode = sgSwitch.add(new EnumSetting.Builder<SwitchMode>()
-        .name("Switch Mode")
-        .description("Mode for switching to crystal in main hand.")
+        .name("切换模式")
+        .description("切换至主手水晶的模式")
         .defaultValue(SwitchMode.Disabled)
         .build()
     );
     private final Setting<Double> switchPenalty = sgSwitch.add(new DoubleSetting.Builder()
-        .name("Switch Penalty")
-        .description("Time to wait after switching before hitting crystals.")
+        .name("切换惩罚")
+        .description("切换武器后等待多少秒再攻击水晶")
         .defaultValue(0.25)
         .min(0)
         .sliderRange(0, 1)
@@ -268,116 +268,116 @@ public class AutoCrystalPlus extends BlackOutModule {
 
     //--------------------Damage--------------------//
     private final Setting<DmgCheckMode> dmgCheckMode = sgDamage.add(new EnumSetting.Builder<DmgCheckMode>()
-        .name("Dmg Check Mode")
-        .description("How safe are the placements (normal is good).")
+        .name("伤害检查模式")
+        .description("放置安全等级检查（normal为常规模式）")
         .defaultValue(DmgCheckMode.Normal)
         .build()
     );
     private final Setting<Double> minPlace = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Place")
-        .description("Minimum damage to place.")
+        .name("最低放置伤害")
+        .description("执行放置操作所需的最低伤害值")
         .defaultValue(4)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> maxPlace = sgDamage.add(new DoubleSetting.Builder()
-        .name("Max Place")
-        .description("Max self damage for placing.")
+        .name("最大自身伤害")
+        .description("允许放置时对自身造成的最大伤害")
         .defaultValue(8)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> minPlaceRatio = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Place Ratio")
-        .description("Max self damage ratio for placing (enemy / self).")
+        .name("最低伤害比率")
+        .description("敌方与自身伤害比值的下限（敌方伤害/自身伤害）")
         .defaultValue(1.4)
         .min(0)
         .sliderRange(0, 5)
         .build()
     );
     private final Setting<Double> maxFriendPlace = sgDamage.add(new DoubleSetting.Builder()
-        .name("Max Friend Place")
-        .description("Max friend damage for placing.")
+        .name("友方最大伤害")
+        .description("允许放置时对友方造成的最大伤害")
         .defaultValue(8)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> minFriendPlaceRatio = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Friend Place Ratio")
-        .description("Max friend damage ratio for placing (enemy / friend).")
+        .name("友方最低比率")
+        .description("敌方与友方伤害比值的下限（敌方伤害/友方伤害）")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 5)
         .build()
     );
     private final Setting<ExplodeMode> expMode = sgDamage.add(new EnumSetting.Builder<ExplodeMode>()
-        .name("Explode Damage Mode")
-        .description("Which things should be checked for exploding.")
+        .name("爆炸伤害模式")
+        .description("爆炸伤害检查的详细程度")
         .defaultValue(ExplodeMode.FullCheck)
         .build()
     );
     private final Setting<Double> minExplode = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Explode")
-        .description("Minimum enemy damage for exploding a crystal.")
+        .name("最低爆炸伤害")
+        .description("触发水晶爆炸的最低敌方伤害值")
         .defaultValue(2.5)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> maxExp = sgDamage.add(new DoubleSetting.Builder()
-        .name("Max Explode")
-        .description("Max self damage for exploding a crystal.")
+        .name("最大自身爆炸伤害")
+        .description("允许爆炸时对自身造成的最大伤害")
         .defaultValue(9)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> minExpRatio = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Explode Ratio")
-        .description("Max self damage ratio for exploding a crystal (enemy / self).")
+        .name("爆炸最低比率")
+        .description("敌方与自身伤害比值的下限（敌方伤害/自身伤害）")
         .defaultValue(1.1)
         .min(0)
         .sliderRange(0, 5)
         .build()
     );
     private final Setting<Double> maxFriendExp = sgDamage.add(new DoubleSetting.Builder()
-        .name("Max Friend Explode")
-        .description("Max friend damage for exploding a crystal.")
+        .name("友方最大爆炸伤害")
+        .description("允许爆炸时对友方造成的最大伤害")
         .defaultValue(12)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> minFriendExpRatio = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Friend Explode Ratio")
-        .description("Min friend damage ratio for exploding a crystal (enemy / friend).")
+        .name("友方爆炸最低比率")
+        .description("敌方与友方伤害比值的下限（敌方伤害/友方伤害）")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 5)
         .build()
     );
     private final Setting<Double> forcePop = sgDamage.add(new DoubleSetting.Builder()
-        .name("Force Pop")
-        .description("Ignores damage checks if any enemy will be popped in x hits.")
+        .name("强制击破")
+        .description("当敌方在X次攻击内可被击杀时忽略伤害检查")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
         .build()
     );
     private final Setting<Double> antiFriendPop = sgDamage.add(new DoubleSetting.Builder()
-        .name("Anti Friend Pop")
-        .description("Cancels any action if any friend will be popped in x hits.")
+        .name("友方击破保护")
+        .description("当友方在X次攻击内可被击杀时取消操作")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
         .build()
     );
     private final Setting<Double> antiSelfPop = sgDamage.add(new DoubleSetting.Builder()
-        .name("Anti Self Pop")
-        .description("Cancels any action if you will be popped in x hits.")
+        .name("自身击破保护")
+        .description("当自身在X次攻击内可被击杀时取消操作")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
@@ -386,46 +386,46 @@ public class AutoCrystalPlus extends BlackOutModule {
 
     //--------------------ID-Predict--------------------//
     private final Setting<Boolean> idPredict = sgID.add(new BoolSetting.Builder()
-        .name("ID Predict")
-        .description("Hits the crystal before it spawns.")
+        .name("ID预测")
+        .description("在水晶生成前进行预攻击")
         .defaultValue(false)
         .build()
     );
     private final Setting<Integer> idStartOffset = sgID.add(new IntSetting.Builder()
-        .name("Id Start Offset")
-        .description("How many id's ahead should we attack.")
+        .name("起始ID偏移量")
+        .description("预攻击时提前多少个实体ID")
         .defaultValue(1)
         .min(0)
         .sliderMax(10)
         .build()
     );
     private final Setting<Integer> idOffset = sgID.add(new IntSetting.Builder()
-        .name("Id Packet Offset")
-        .description("How many id's ahead should we attack between id packets.")
+        .name("数据包ID间隔")
+        .description("相邻数据包之间预攻击的ID间隔数")
         .defaultValue(1)
         .min(1)
         .sliderMax(10)
         .build()
     );
     private final Setting<Integer> idPackets = sgID.add(new IntSetting.Builder()
-        .name("Id Packets")
-        .description("How many packets to send.")
+        .name("预攻击数据包")
+        .description("每次触发时发送的预攻击数据包数量")
         .defaultValue(1)
         .min(1)
         .sliderMax(10)
         .build()
     );
     private final Setting<Double> idDelay = sgID.add(new DoubleSetting.Builder()
-        .name("ID Start Delay")
-        .description("Starts sending id predict packets after this many seconds.")
+        .name("预攻击起始延迟")
+        .description("开始发送预攻击数据包前的等待时间（秒）")
         .defaultValue(0.05)
         .min(0)
         .sliderRange(0, 1)
         .build()
     );
     private final Setting<Double> idPacketDelay = sgID.add(new DoubleSetting.Builder()
-        .name("ID Packet Delay")
-        .description("Waits this many seconds between sending ID packets.")
+        .name("数据包间隔延迟")
+        .description("相邻预攻击数据包之间的发送间隔时间（秒）")
         .defaultValue(0.05)
         .min(0)
         .sliderRange(0, 1)
@@ -434,40 +434,40 @@ public class AutoCrystalPlus extends BlackOutModule {
 
     //--------------------Extrapolation--------------------//
     private final Setting<Integer> selfExt = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Self Extrapolation")
-        .description("How many ticks of movement should be predicted for self damage checks.")
+        .name("自身运动预测")
+        .description("用于自身伤害检查的运动预测游戏刻数")
         .defaultValue(0)
         .range(0, 100)
         .sliderMax(20)
         .build()
     );
     private final Setting<Integer> extrapolation = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Extrapolation")
-        .description("How many ticks of movement should be predicted for enemy damage checks.")
+        .name("敌方运动预测")
+        .description("用于敌方伤害检查的运动预测游戏刻数")
         .defaultValue(0)
         .range(0, 100)
         .sliderMax(20)
         .build()
     );
     private final Setting<Integer> rangeExtrapolation = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Range Extrapolation")
-        .description("How many ticks of movement should be predicted for attack ranges before placing.")
+        .name("攻击距离预测")
+        .description("放置前攻击距离计算使用的运动预测游戏刻数")
         .defaultValue(0)
         .range(0, 100)
         .sliderMax(20)
         .build()
     );
     private final Setting<Integer> hitboxExtrapolation = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Hitbox Extrapolation")
-        .description("How many ticks of movement should be predicted for hitboxes in placing checks.")
+        .name("碰撞箱预测")
+        .description("放置检查时碰撞箱计算的运动预测游戏刻数")
         .defaultValue(0)
         .range(0, 100)
         .sliderMax(20)
         .build()
     );
     private final Setting<Integer> extSmoothness = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Extrapolation Smoothening")
-        .description("How many earlier ticks should be used in average calculation for extrapolation motion.")
+        .name("预测平滑度")
+        .description("运动预测计算中使用前N帧的平均值")
         .defaultValue(2)
         .range(1, 20)
         .sliderRange(1, 20)
@@ -476,46 +476,46 @@ public class AutoCrystalPlus extends BlackOutModule {
 
     //--------------------Render--------------------//
     private final Setting<Boolean> placeSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Place Swing")
-        .description("Renders swing animation when placing a crystal.")
+    .name("放置挥动动画")
+    .description("放置水晶时显示挥动手臂的动画效果")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Place Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+    .name("放置手持方式")
+    .description("选择放置水晶时挥动的手臂")
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
     private final Setting<Boolean> attackSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Attack Swing")
-        .description("Renders swing animation when placing a crystal.")
+        .name("攻击挥动动画")
+        .description("攻击水晶时显示挥动手臂的动画效果")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> attackHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Attack Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+    .name("攻击手持方式")
+    .description("选择攻击水晶时挥动的手臂")
+        .defaultValue(SwingHand.真实手持)
         .visible(attackSwing::get)
         .build()
     );
     private final Setting<Boolean> render = sgRender.add(new BoolSetting.Builder()
-        .name("Render")
-        .description("Renders box on placement.")
+    .name("渲染显示")
+    .description("是否渲染放置水晶的框体效果")
         .defaultValue(true)
         .build()
     );
     private final Setting<RenderMode> renderMode = sgRender.add(new EnumSetting.Builder<RenderMode>()
-        .name("Render Mode")
-        .description("What should the render look like.")
+    .name("渲染模式")
+    .description("选择框体的渲染显示模式")
         .defaultValue(RenderMode.BlackOut)
         .build()
     );
     private final Setting<Double> renderTime = sgRender.add(new DoubleSetting.Builder()
-        .name("Render Time")
-        .description("How long the box should remain in full alpha value.")
+    .name("高亮时长")
+    .description("框体保持完全可见的时间（秒）")
         .defaultValue(0.3)
         .min(0)
         .sliderRange(0, 10)
@@ -523,22 +523,22 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<FadeMode> fadeMode = sgRender.add(new EnumSetting.Builder<FadeMode>()
-        .name("Fade Mode")
-        .description("How long the fading should take.")
+    .name("渐隐模式")
+    .description("选择框体的渐隐方式")
         .defaultValue(FadeMode.Normal)
         .visible(() -> renderMode.get() == RenderMode.BlackOut)
         .build()
     );
     private final Setting<EarthFadeMode> earthFadeMode = sgRender.add(new EnumSetting.Builder<EarthFadeMode>()
-        .name("Earth Fade Mode")
-        .description(".")
+    .name("地影渐隐模式")
+    .description("选择地影渲染模式下框体的渐隐方式")
         .defaultValue(EarthFadeMode.Normal)
         .visible(() -> renderMode.get() == RenderMode.Earthhack)
         .build()
     );
     private final Setting<Double> fadeTime = sgRender.add(new DoubleSetting.Builder()
-        .name("Fade Time")
-        .description("How long the fading should take.")
+    .name("渐隐时长")
+    .description("框体完全渐隐所需时间（秒）")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
@@ -546,8 +546,8 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> animationSpeed = sgRender.add(new DoubleSetting.Builder()
-        .name("Animation Move Speed")
-        .description("How fast should blackout mode box move.")
+    .name("动画移动速度")
+    .description("黑幕模式框体的移动动画速率")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
@@ -555,8 +555,8 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> animationMoveExponent = sgRender.add(new DoubleSetting.Builder()
-        .name("Animation Move Exponent")
-        .description("Moves faster when longer away from the target.")
+    .name("移动速率指数")
+    .description("距离目标越远时移动速度越快")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 10)
@@ -564,8 +564,8 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> animationExponent = sgRender.add(new DoubleSetting.Builder()
-        .name("Animation Exponent")
-        .description("How fast should blackout mode box grow.")
+    .name("缩放速率指数")
+    .description("黑幕模式框体的缩放动画速率")
         .defaultValue(3)
         .min(0)
         .sliderRange(0, 10)
@@ -573,36 +573,36 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("Shape Mode")
-        .description("Which parts of render should be rendered.")
+    .name("显示模式")
+    .description("选择框体的渲染组成部分")
         .defaultValue(ShapeMode.Both)
         .build()
     );
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("Line Color")
-        .description("Line color of rendered boxes")
+    .name("线框颜色")
+    .description("渲染框体的线框颜色")
         .defaultValue(new SettingColor(255, 0, 0, 255))
         .build()
     );
     public final Setting<SettingColor> color = sgRender.add(new ColorSetting.Builder()
-        .name("Side Color")
-        .description("Side color of rendered boxes")
+    .name("填充颜色")
+        .description("渲染框体的填充颜色")
         .defaultValue(new SettingColor(255, 0, 0, 50))
         .build()
     );
 
     //--------------------Compatibility--------------------//
     private final Setting<Double> autoMineDamage = sgCompatibility.add(new DoubleSetting.Builder()
-        .name("Auto Mine Damage")
-        .description("Prioritizes placing on automine target block.")
+    .name("自动挖掘伤害")
+    .description("优先在自动挖掘目标方块上放置水晶")
         .defaultValue(1.1)
         .min(1)
         .sliderRange(1, 5)
         .build()
     );
     private final Setting<Boolean> amPlace = sgCompatibility.add(new BoolSetting.Builder()
-        .name("Auto Mine Place")
-        .description("Ignores automine block before if actually breaks.")
+    .name("自动挖掘放置")
+    .description("在方块实际被破坏前忽略自动挖掘目标方块")
         .defaultValue(true)
         .build()
     );
@@ -616,44 +616,44 @@ public class AutoCrystalPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Boolean> amSpam = sgCompatibility.add(new BoolSetting.Builder()
-        .name("Auto Mine Spam")
-        .description("Spams crystals before the block breaks.")
+    .name("自动挖掘连放")
+    .description("在方块被破坏前连续放置水晶")
         .defaultValue(false)
         .visible(amPlace::get)
         .build()
     );
     private final Setting<AutoMineBrokenMode> amBroken = sgCompatibility.add(new EnumSetting.Builder<AutoMineBrokenMode>()
-        .name("Auto Mine Broken")
-        .description("Doesn't place on automine block.")
+    .name("自动挖掘中断")
+    .description("不在已中断的自动挖掘方块上放置")
         .defaultValue(AutoMineBrokenMode.Near)
         .build()
     );
     private final Setting<Boolean> paAttack = sgCompatibility.add(new BoolSetting.Builder()
-        .name("Piston Crystal Attack")
-        .description("Doesn't attack the crystal placed by piston crystal.")
+    .name("活塞水晶攻击")
+    .description("不攻击由活塞水晶放置的水晶")
         .defaultValue(true)
         .build()
     );
     private final Setting<Boolean> paPlace = sgCompatibility.add(new BoolSetting.Builder()
-        .name("Piston Crystal Placing")
-        .description("Doesn't place crystals when piston crystal is enabled.")
+    .name("活塞水晶放置")
+    .description("当活塞水晶启用时不进行放置")
         .defaultValue(true)
         .build()
     );
 
     //--------------------Debug--------------------//
-    private final Setting<Boolean> renderExt = sgDebug.add(new BoolSetting.Builder()
-        .name("Render Extrapolation")
-        .description("Renders boxes at players' predicted positions.")
-        .defaultValue(false)
-        .build()
-    );
-    private final Setting<Boolean> renderSelfExt = sgDebug.add(new BoolSetting.Builder()
-        .name("Render Self Extrapolation")
-        .description("Renders box at your predicted position.")
-        .defaultValue(false)
-        .build()
-    );
+       private final Setting<Boolean> renderExt = sgDebug.add(new BoolSetting.Builder()
+       .name("运动预测渲染")
+       .description("在玩家的预测位置上渲染框体")
+       .defaultValue(false)
+       .build()
+   );
+   private final Setting<Boolean> renderSelfExt = sgDebug.add(new BoolSetting.Builder()
+       .name("自身运动预测渲染")
+       .description("在自身预测位置上渲染框体")
+       .defaultValue(false)
+       .build()
+   );
 
     private long ticksEnabled = 0;
     private double placeTimer = 0;
@@ -983,7 +983,7 @@ public class AutoCrystalPlus extends BlackOutModule {
                 int hotbar = InvUtils.findInHotbar(Items.END_CRYSTAL).slot();
                 if (handToUse != null || (switchMode.get() == SwitchMode.Silent && hotbar >= 0) || ((switchMode.get() == SwitchMode.PickSilent || switchMode.get() == SwitchMode.InvSilent) && silentSlot >= 0)) {
                     placing = true;
-                    if (!SettingUtils.shouldRotate(RotationType.Interact) || Managers.ROTATION.start(placePos.down(), smartRot.get() ? new Vec3d(placePos.getX() + 0.5, placePos.getY(), placePos.getZ() + 0.5) : null, priority, RotationType.Interact, Objects.hash(name + "placing"))) {
+                    if (!SettingUtils.shouldRotate(RotationType.交互) || Managers.ROTATION.start(placePos.down(), smartRot.get() ? new Vec3d(placePos.getX() + 0.5, placePos.getY(), placePos.getZ() + 0.5) : null, priority, RotationType.交互, Objects.hash(name + "placing"))) {
                         if (speedCheck() && delayCheck())
                             placeCrystal(placePos.down(), placeDir, handToUse, silentSlot, hotbar);
                     }
@@ -1014,11 +1014,11 @@ public class AutoCrystalPlus extends BlackOutModule {
 
         if (expEntity != null) {
             if (multiTaskCheck() && !isAttacked(expEntity.getId()) && attackDelayCheck() && existedCheck(expEntity.getBlockPos())) {
-                if (!SettingUtils.shouldRotate(RotationType.Attacking) || startAttackRot()) {
+                if (!SettingUtils.shouldRotate(RotationType.攻击) || startAttackRot()) {
                     explode(expEntity.getId(), expEntity.getPos());
                 }
             }
-        } else if (SettingUtils.shouldRotate(RotationType.Attacking)) Managers.ROTATION.end(Objects.hash(name + "attacking"));
+        } else if (SettingUtils.shouldRotate(RotationType.攻击)) Managers.ROTATION.end(Objects.hash(name + "attacking"));
     }
 
     private boolean attackDelayCheck() {
@@ -1029,7 +1029,7 @@ public class AutoCrystalPlus extends BlackOutModule {
     }
 
     private boolean startAttackRot() {
-        return (Managers.ROTATION.start(expEntity.getBoundingBox(), smartRot.get() ? expEntity.getPos() : null, priority + (!isAttacked(expEntity.getId()) && blocksPlacePos(expEntity) ? -0.1 : 0.1), RotationType.Attacking, Objects.hash(name + "attacking")));
+        return (Managers.ROTATION.start(expEntity.getBoundingBox(), smartRot.get() ? expEntity.getPos() : null, priority + (!isAttacked(expEntity.getId()) && blocksPlacePos(expEntity) ? -0.1 : 0.1), RotationType.攻击, Objects.hash(name + "attacking")));
     }
 
     private boolean blocksPlacePos(Entity entity) {
@@ -1119,7 +1119,7 @@ public class AutoCrystalPlus extends BlackOutModule {
 
             if (placeSwing.get()) clientSwing(placeHand.get(), switched ? Hand.MAIN_HAND : handToUse);
 
-            if (SettingUtils.shouldRotate(RotationType.Interact))
+            if (SettingUtils.shouldRotate(RotationType.交互))
                 Managers.ROTATION.end(Objects.hash(name + "placing"));
 
             if (switched) {
@@ -1190,11 +1190,11 @@ public class AutoCrystalPlus extends BlackOutModule {
             PlayerInteractEntityC2SPacket packet = PlayerInteractEntityC2SPacket.attack(mc.player, mc.player.isSneaking());
             ((IInteractEntityC2SPacket) packet).setId(id);
 
-            SettingUtils.swing(SwingState.Pre, SwingType.Attacking, Hand.MAIN_HAND);
+            SettingUtils.swing(SwingState.Pre, SwingType.攻击, Hand.MAIN_HAND);
 
             sendPacket(packet);
 
-            SettingUtils.swing(SwingState.Post, SwingType.Attacking, Hand.MAIN_HAND);
+            SettingUtils.swing(SwingState.Post, SwingType.攻击, Hand.MAIN_HAND);
             if (attackSwing.get()) clientSwing(attackHand.get(), Hand.MAIN_HAND);
 
             blocked.clear();

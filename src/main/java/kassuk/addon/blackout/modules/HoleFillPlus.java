@@ -298,7 +298,7 @@ public class HoleFillPlus extends BlackOutModule {
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
@@ -649,7 +649,7 @@ public class HoleFillPlus extends BlackOutModule {
 
         placing = true;
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(data.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "placing"))) return;
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(data.pos(), priority, RotationType.方块放置, Objects.hash(name + "placing"))) return;
 
         if (!switched && hand == null) {
             switch (switchMode.get()) {
@@ -676,7 +676,7 @@ public class HoleFillPlus extends BlackOutModule {
         blocksLeft--;
         placesLeft--;
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) {
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) {
             Managers.ROTATION.end(Objects.hash(name + "placing"));
         }
     }

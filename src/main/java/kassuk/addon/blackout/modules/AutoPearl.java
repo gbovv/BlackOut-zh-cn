@@ -79,7 +79,7 @@ public class AutoPearl extends BlackOutModule {
     private final Setting<SwingHand> swingHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(swing::get)
         .build()
     );
@@ -157,7 +157,7 @@ public class AutoPearl extends BlackOutModule {
 
         BlockPos pos = mc.player.getBlockPos();
 
-        boolean rotated = instaRot.get() || !SettingUtils.shouldRotate(RotationType.BlockPlace) || Managers.ROTATION.start(pos.down(), priority, RotationType.BlockPlace, Objects.hash(name + "placing"));
+        boolean rotated = instaRot.get() || !SettingUtils.shouldRotate(RotationType.方块放置) || Managers.ROTATION.start(pos.down(), priority, RotationType.方块放置, Objects.hash(name + "placing"));
         if (!rotated) return false;
 
         if (instaRot.get())
@@ -185,7 +185,7 @@ public class AutoPearl extends BlackOutModule {
 
         placeBlock(hand == null ? Hand.MAIN_HAND : hand, pos.down().toCenterPos(), Direction.UP, pos.down());
 
-        if (!instaRot.get() && SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "placing"));
+        if (!instaRot.get() && SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "placing"));
         placed = true;
 
         if (hand == null) {

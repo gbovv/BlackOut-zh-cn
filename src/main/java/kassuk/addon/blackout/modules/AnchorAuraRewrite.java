@@ -47,14 +47,14 @@ public class AnchorAuraRewrite extends BlackOutModule {
 
     //--------------------General--------------------//
     private final Setting<Boolean> pauseEat = sgGeneral.add(new BoolSetting.Builder()
-        .name("Pause Eat")
-        .description("Pauses when you are eating.")
+        .name("暂停进食")
+        .description("当进食时暂停模块")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwitchMode> switchMode = sgGeneral.add(new EnumSetting.Builder<SwitchMode>()
-        .name("Switch Mode")
-        .description("Switching method. Silent is the most reliable but doesn't work everywhere.")
+        .name("切换模式")
+        .description("物品切换方式。静默模式最可靠但并非所有场景都适用")
         .defaultValue(SwitchMode.Silent)
         .build()
     );
@@ -65,16 +65,16 @@ public class AnchorAuraRewrite extends BlackOutModule {
         .build()
     );
     private final Setting<Double> placeSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Place Speed")
-        .description("How many anchors should be placed every second.")
+        .name("放置速度")
+        .description("每秒放置锚的数量")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> explodeSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Explode Speed")
-        .description("How many anchors should be blown every second.")
+        .name("爆炸速度")
+        .description("每秒引爆锚的数量")
         .defaultValue(4)
         .min(0)
         .sliderRange(0, 20)
@@ -83,24 +83,24 @@ public class AnchorAuraRewrite extends BlackOutModule {
 
     //--------------------Damage--------------------//
     private final Setting<Double> minDmg = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Damage")
-        .description("Minimum damage required to place.")
+        .name("最小伤害")
+        .description("触发放置的最低伤害值")
         .defaultValue(8)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> maxDmg = sgDamage.add(new DoubleSetting.Builder()
-        .name("Max Damage")
-        .description("Maximum damage to self.")
+        .name("最大自伤")
+        .description("可承受的最大自身伤害")
         .defaultValue(6)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> minRatio = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Damage Ratio")
-        .description("Damage ratio between enemy damage and self damage (enemy / self).")
+        .name("最小伤害比例")
+        .description("敌方伤害与自身伤害的最小比例（敌方/自身）")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 10)
@@ -109,24 +109,24 @@ public class AnchorAuraRewrite extends BlackOutModule {
 
     //--------------------Extrapolation--------------------//
     private final Setting<Integer> selfExt = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Self Extrapolation")
-        .description("How many ticks of movement should be predicted for self damage checks.")
+        .name("自身预测")
+        .description("用于自身伤害预测的移动预测刻度数")
         .defaultValue(0)
         .range(0, 100)
         .sliderMax(20)
         .build()
     );
     private final Setting<Integer> extrapolation = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Extrapolation")
-        .description("How many ticks of movement should be predicted for enemy damage checks.")
+        .name("敌方预测")
+        .description("用于敌方伤害预测的移动预测刻度数")
         .defaultValue(0)
         .range(0, 100)
         .sliderMax(20)
         .build()
     );
     private final Setting<Integer> extSmoothness = sgExtrapolation.add(new IntSetting.Builder()
-        .name("Extrapolation Smoothening")
-        .description("How many earlier ticks should be used in average calculation for extrapolation motion.")
+        .name("预测平滑度")
+        .description("预测运动平均计算所使用的历史刻度数")
         .defaultValue(2)
         .range(1, 20)
         .sliderRange(1, 20)
@@ -135,46 +135,46 @@ public class AnchorAuraRewrite extends BlackOutModule {
 
     //--------------------Render--------------------//
     private final Setting<Boolean> placeSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Place Swing")
-        .description("Renders swing animation when placing a block.")
+        .name("放置挥动")
+        .description("在放置方块时渲染挥动动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Place Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("挥动手部")
+        .description("选择要挥动的手部")
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
     private final Setting<Boolean> interactSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Interact Swing")
-        .description("Renders swing animation when interacting with a block.")
+        .name("交互挥动")
+        .description("在与方块交互时渲染挥动动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> interactHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Interact Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("交互手部") 
+        .description("选择要挥动的手部")
+        .defaultValue(SwingHand.真实手持)
         .visible(interactSwing::get)
         .build()
     );
     public final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("Shape Mode")
-        .description("Which parts should be renderer.")
+        .name("渲染模式")
+        .description("选择要渲染的部分")
         .defaultValue(ShapeMode.Both)
         .build()
     );
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("Line Color")
-        .description("Line color of rendered stuff")
+        .name("线条颜色")
+        .description("渲染物的线条颜色")
         .defaultValue(new SettingColor(255, 0, 0, 255))
         .build()
     );
     public final Setting<SettingColor> color = sgRender.add(new ColorSetting.Builder()
-        .name("Side Color")
-        .description("Side color of rendered stuff")
+        .name("填充颜色")
+        .description("渲染物的侧面颜色")
         .defaultValue(new SettingColor(255, 0, 0, 50))
         .build()
     );
@@ -314,7 +314,7 @@ public class AnchorAuraRewrite extends BlackOutModule {
 
         if (!present) return;
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(placePos, priority, RotationType.BlockPlace, Objects.hash(name + "placing"))) return;
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(placePos, priority, RotationType.方块放置, Objects.hash(name + "placing"))) return;
 
         boolean switched = false;
         if (hand == null) {
@@ -340,7 +340,7 @@ public class AnchorAuraRewrite extends BlackOutModule {
 
         lastPlace = System.currentTimeMillis();
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "placing"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "placing"));
         if (placeSwing.get()) clientSwing(placeHand.get(), hand);
 
         if (switched) {
@@ -402,7 +402,7 @@ public class AnchorAuraRewrite extends BlackOutModule {
 
         if (!glowPresent || !explodePresent) return;
 
-        if (SettingUtils.shouldRotate(RotationType.Interact) && !Managers.ROTATION.start(placePos, priority, RotationType.Interact, Objects.hash(name + "explode"))) return;
+        if (SettingUtils.shouldRotate(RotationType.交互) && !Managers.ROTATION.start(placePos, priority, RotationType.交互, Objects.hash(name + "explode"))) return;
 
         boolean switched = false;
         if (glowHand == null) {

@@ -17,16 +17,16 @@ import net.minecraft.util.Identifier;
 public class CatGirl extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private final Setting<Double> girlScale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Catgirl Scale")
-        .description("Modify the size of the Catgirl.")
+        .name("猫娘缩放比例")
+        .description("调整猫娘图像的显示尺寸")
         .defaultValue(1)
         .min(0)
         .sliderRange(0, 10)
         .build()
     );
     private final Setting<SideMode> side = sgGeneral.add(new EnumSetting.Builder<SideMode>()
-        .name("Kill Message Mode")
-        .description("What kind of messages to send.")
+        .name("显示方位")
+        .description("猫娘在屏幕上的显示位置")
         .defaultValue(SideMode.Right)
         .build()
     );

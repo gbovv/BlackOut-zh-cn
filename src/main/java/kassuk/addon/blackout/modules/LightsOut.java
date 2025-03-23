@@ -44,7 +44,7 @@ public class LightsOut extends BlackOutModule {
     private final Setting<SwingHand> swingHand = sgGeneral.add(new EnumSetting.Builder<SwingHand>()
         .name("Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(swing::get)
         .build()
     );

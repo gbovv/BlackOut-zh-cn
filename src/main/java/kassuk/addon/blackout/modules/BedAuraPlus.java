@@ -203,7 +203,7 @@ public class BedAuraPlus extends BlackOutModule {
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Place Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
@@ -216,7 +216,7 @@ public class BedAuraPlus extends BlackOutModule {
     private final Setting<SwingHand> interactHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Interact Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(interactSwing::get)
         .build()
     );
@@ -501,7 +501,7 @@ public class BedAuraPlus extends BlackOutModule {
 
     private List<BlockPos> interactUpdate() {
         if (doubleInteract.get()) {
-            if (SettingUtils.shouldRotate(RotationType.Interact) && !Managers.ROTATION.start(placePos, priority, RotationType.Interact, Objects.hash(name + "explode"))) {
+            if (SettingUtils.shouldRotate(RotationType.交互) && !Managers.ROTATION.start(placePos, priority, RotationType.交互, Objects.hash(name + "explode"))) {
                 return null;
             }
 
@@ -516,7 +516,7 @@ public class BedAuraPlus extends BlackOutModule {
                 }
             }
 
-            if (SettingUtils.shouldRotate(RotationType.Interact)) {
+            if (SettingUtils.shouldRotate(RotationType.交互)) {
                 Managers.ROTATION.end(Objects.hash(name + "explode"));
             }
 
@@ -535,7 +535,7 @@ public class BedAuraPlus extends BlackOutModule {
             return null;
         }
 
-        if (SettingUtils.shouldRotate(RotationType.Interact) && !Managers.ROTATION.start(interactPos, priority, RotationType.Interact, Objects.hash(name + "explode"))) {
+        if (SettingUtils.shouldRotate(RotationType.交互) && !Managers.ROTATION.start(interactPos, priority, RotationType.交互, Objects.hash(name + "explode"))) {
             return null;
         }
 
@@ -543,7 +543,7 @@ public class BedAuraPlus extends BlackOutModule {
 
         if (interactSwing.get()) clientSwing(interactHand.get(), Hand.MAIN_HAND);
 
-        if (SettingUtils.shouldRotate(RotationType.Interact)) {
+        if (SettingUtils.shouldRotate(RotationType.交互)) {
             Managers.ROTATION.end(Objects.hash(name + "explode"));
         }
         List<BlockPos> list = new ArrayList<>();
@@ -606,7 +606,7 @@ public class BedAuraPlus extends BlackOutModule {
             return false;
         }
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(placeData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "placing"))) {
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(placeData.pos(), priority, RotationType.方块放置, Objects.hash(name + "placing"))) {
             return false;
         }
 
@@ -645,7 +645,7 @@ public class BedAuraPlus extends BlackOutModule {
 
         place(hand == null ? Hand.MAIN_HAND : hand);
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) {
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) {
             Managers.ROTATION.end(Objects.hash(name + "placing"));
         }
 

@@ -119,7 +119,7 @@ public class PistonPush extends BlackOutModule {
     private final Setting<SwingHand> pistonHand = sgSwing.add(new EnumSetting.Builder<SwingHand>()
         .name("Piston Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(pistonSwing::get)
         .build()
     );
@@ -132,7 +132,7 @@ public class PistonPush extends BlackOutModule {
     private final Setting<SwingHand> redstoneHand = sgSwing.add(new EnumSetting.Builder<SwingHand>()
         .name("Redstone Swing Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(redstoneSwing::get)
         .build()
     );
@@ -273,7 +273,7 @@ public class PistonPush extends BlackOutModule {
 
         if (!mc.player.isOnGround()) return;
         if (EntityUtils.intersectsWithEntity(Box.from(new BlockBox(pistonPos)), entity -> !entity.isSpectator() && !(entity instanceof ItemEntity))) return;
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(pistonData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "piston"))) return;
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(pistonData.pos(), priority, RotationType.方块放置, Objects.hash(name + "piston"))) return;
         sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(pistonDir.asRotation(), Managers.ROTATION.lastDir[1], Managers.ON_GROUND.isOnGround()));
 
         boolean switched = false;
@@ -297,7 +297,7 @@ public class PistonPush extends BlackOutModule {
 
         placeBlock(hand, pistonData.pos().toCenterPos(), pistonData.dir(), pistonData.pos());
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "piston"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "piston"));
         pistonTime = System.currentTimeMillis();
         pistonPlaced = true;
 
@@ -330,7 +330,7 @@ public class PistonPush extends BlackOutModule {
             return;
         }
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(redstoneData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "redstone"))) return;
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(redstoneData.pos(), priority, RotationType.方块放置, Objects.hash(name + "redstone"))) return;
 
         boolean switched = false;
 
@@ -353,7 +353,7 @@ public class PistonPush extends BlackOutModule {
 
         placeBlock(hand, redstoneData.pos().toCenterPos(), redstoneData.dir(), redstoneData.pos());
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "redstone"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "redstone"));
         redstonePlaced = true;
         redstoneTime = System.currentTimeMillis();
 

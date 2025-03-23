@@ -20,66 +20,66 @@ public class SwingSettings extends BlackOutModule {
         super(BlackOut.SETTINGS, "Swing", "Global swing settings for every blackout module.");
     }
 
-    private final SettingGroup sgInteract = settings.createGroup("Interact");
-    private final SettingGroup sgBlockPlace = settings.createGroup("Block Place");
-    private final SettingGroup sgMining = settings.createGroup("Mining");
-    private final SettingGroup sgAttack = settings.createGroup("Attack");
-    private final SettingGroup sgUse = settings.createGroup("Use");
+    private final SettingGroup sgInteract = settings.createGroup("交互");
+    private final SettingGroup sgBlockPlace = settings.createGroup("方块放置");
+    private final SettingGroup sgMining = settings.createGroup("挖掘");
+    private final SettingGroup sgAttack = settings.createGroup("攻击");
+    private final SettingGroup sgUse = settings.createGroup("使用");
 
     public final Setting<Boolean> interact = sgInteract.add(new BoolSetting.Builder()
-        .name("Interact Swing")
-        .description("Swings your hand when you interact with a block.")
+        .name("交互挥手")
+        .description("当与方块交互时挥动手部。")
         .defaultValue(true)
         .build()
     );
     public final Setting<SwingState> interactState = sgInteract.add(new EnumSetting.Builder<SwingState>()
-        .name("Interact State")
-        .description("Should we swing our hand before or after the action.")
+        .name("交互状态")
+        .description("在操作之前或之后挥动手部")
         .defaultValue(SwingState.Post)
         .visible(interact::get)
         .build()
     );
     public final Setting<Boolean> blockPlace = sgBlockPlace.add(new BoolSetting.Builder()
-        .name("Block Place Swing")
-        .description("Swings your hand when you interact with a block.")
+        .name("方块放置挥手")
+        .description("当放置方块时挥动手部。")
         .defaultValue(true)
         .build()
     );
     public final Setting<SwingState> blockPlaceState = sgBlockPlace.add(new EnumSetting.Builder<SwingState>()
-        .name("Block Place State")
-        .description("Should we swing our hand before or after the action.")
+        .name("方块放置状态")
+        .description("在放置方块之前或之后挥动手部")
         .defaultValue(SwingState.Post)
         .visible(blockPlace::get)
         .build()
     );
     public final Setting<MiningSwingState> mining = sgMining.add(new EnumSetting.Builder<MiningSwingState>()
-        .name("Mining Swing")
-        .description("Swings your hand when you place a crystal.")
+        .name("挖掘挥手")
+        .description("放置水晶时挥动手部")
         .defaultValue(MiningSwingState.Double)
         .build()
     );
     public final Setting<Boolean> attack = sgAttack.add(new BoolSetting.Builder()
-        .name("Attack Swing")
-        .description("Swings your hand when you attack any entity.")
+        .name("攻击挥手")
+        .description("攻击实体时挥动手部")
         .defaultValue(true)
         .build()
     );
     public final Setting<SwingState> attackState = sgAttack.add(new EnumSetting.Builder<SwingState>()
-        .name("Attack State")
-        .description("Should we swing our hand before or after the action.")
+        .name("攻击状态")
+        .description("在攻击之前或之后挥动手部")
         .defaultValue(SwingState.Post)
         .visible(attack::get)
         .build()
     );
     public final Setting<Boolean> use = sgUse.add(new BoolSetting.Builder()
-        .name("Use Swing")
-        .description("Swings your hand when using an item. NCP doesn't check this.")
+        .name("使用挥手")
+        .description("使用物品时挥动手部")
         .defaultValue(true)
         .build()
     );
     public final Setting<SwingState> useState = sgUse.add(new EnumSetting.Builder<SwingState>()
-        .name("Using State")
-        .description("Should we swing our hand before or after the action.")
+        .name("使用状态")
+        .description("在使用物品之前或之后挥动手部")
         .defaultValue(SwingState.Post)
         .visible(use::get)
         .build()
@@ -94,10 +94,10 @@ public class SwingSettings extends BlackOutModule {
         }
 
         switch (type) {
-            case Interact -> swing(interact.get(), hand);
-            case Placing -> swing(blockPlace.get(), hand);
-            case Attacking -> swing(attack.get(), hand);
-            case Using -> swing(use.get(), hand);
+            case 交互 -> swing(interact.get(), hand);
+            case 放置 -> swing(blockPlace.get(), hand);
+            case 攻击 -> swing(attack.get(), hand);
+            case 使用 -> swing(use.get(), hand);
         }
     }
 
@@ -126,11 +126,11 @@ public class SwingSettings extends BlackOutModule {
 
     private SwingState getState(SwingType type) {
         return switch (type) {
-            case Interact -> interactState.get();
-            case Mining -> SwingState.Post;
-            case Placing -> blockPlaceState.get();
-            case Attacking -> attackState.get();
-            case Using -> useState.get();
+            case 交互 -> interactState.get();
+            case 挖掘 -> SwingState.Post;
+            case 放置 -> blockPlaceState.get();
+            case 攻击 -> attackState.get();
+            case 使用 -> useState.get();
         };
     }
 

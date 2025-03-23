@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class SpeedPlus extends BlackOutModule {
     public SpeedPlus() {
-        super(BlackOut.BLACKOUT, "Speed+", "Speeeeeeeed.");
+        super(BlackOut.BLACKOUT, "速度增强", "高性能移动优化模块");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -31,14 +31,14 @@ public class SpeedPlus extends BlackOutModule {
 
     //--------------------General--------------------//
     private final Setting<SpeedMode> mode = sgGeneral.add(new EnumSetting.Builder<SpeedMode>()
-        .name("Mode")
-        .description("Mode for speed.")
+        .name("模式")
+        .description("选择速度调整的工作模式")
         .defaultValue(SpeedMode.Instant)
         .build()
     );
     private final Setting<Double> accelerationAmount = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Acceleration")
-        .description("How much should the speed increase every movement tick.")
+        .name("加速度")
+        .description("每个移动刻的速度增量（块/刻²）")
         .defaultValue(0.3)
         .min(0)
         .sliderMax(10)
@@ -46,50 +46,50 @@ public class SpeedPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Boolean> rbReset = sgGeneral.add(new BoolSetting.Builder()
-        .name("Reset On Rubberband")
-        .description("Resets speed when rubberbanding.")
+        .name("防回弹重置")
+        .description("服务器回弹时重置速度")
         .defaultValue(false)
         .visible(() -> mode.get() == SpeedMode.Accelerate)
         .build()
     );
     private final Setting<Boolean> airStrafe = sgGeneral.add(new BoolSetting.Builder()
-        .name("Air Strafe")
-        .description("Lets you move fast in air too.")
+        .name("空中转向")
+        .description("悬空时保持加速能力")
         .defaultValue(false)
         .visible(() -> mode.get() == SpeedMode.Accelerate)
         .build()
     );
     private final Setting<Boolean> onlyPressed = sgGeneral.add(new BoolSetting.Builder()
-        .name("Only Pressed")
-        .description("Uses instant mode when you arent pressing jump key.")
+        .name("按键触发")
+        .description("仅在按住跳跃键时启用")
         .defaultValue(false)
         .visible(() -> mode.get() == SpeedMode.CCStrafe)
         .build()
     );
     private final Setting<Keybind> strafeBind = sgGeneral.add(new KeybindSetting.Builder()
-        .name("Strafe Bind")
-        .description("Strafes when this key is pressed.")
+        .name("转向按键")
+        .description("按下时激活特殊转向逻辑")
         .defaultValue(Keybind.fromKey(-1))
         .visible(() -> mode.get() == SpeedMode.CCStrafe && onlyPressed.get())
         .build()
     );
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Speed")
-        .description("How many blocks to move every movement tick")
+        .name("移动速度")
+        .description("基础移动速度（块/刻）")
         .defaultValue(0.287)
         .min(0)
         .sliderMax(10)
         .build()
     );
     private final Setting<Boolean> knockBack = sgGeneral.add(new BoolSetting.Builder()
-        .name("Damage Boost")
-        .description("Turns knockback into velocity.")
+        .name("击退转化")
+        .description("将击退效果转化为移动速度")
         .defaultValue(false)
         .build()
     );
     private final Setting<Double> kbFactor = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Damage Boost Factor")
-        .description("Knockback multiplier")
+        .name("转化系数")
+        .description("击退力量转化倍数")
         .defaultValue(1)
         .min(0)
         .sliderMax(10)
@@ -99,33 +99,33 @@ public class SpeedPlus extends BlackOutModule {
 
     //--------------------Pause--------------------//
     private final Setting<Boolean> pauseSneak = sgPause.add(new BoolSetting.Builder()
-        .name("Pause Sneak")
-        .description("Doesn't modify movement while sneaking.")
+        .name("潜行暂停")
+        .description("潜行时不修改移动")
         .defaultValue(true)
         .build()
     );
 
     private final Setting<Boolean> pauseElytra = sgPause.add(new BoolSetting.Builder()
-        .name("Pause Elytra")
-        .description("Doesn't modify movement while flying with elytra.")
+        .name("鞘翅暂停")
+        .description("使用鞘翅飞行时不修改移动")
         .defaultValue(true)
         .build()
     );
     private final Setting<Boolean> pauseFly = sgPause.add(new BoolSetting.Builder()
-        .name("Pause Fly")
-        .description("Doesn't modify movement while flying.")
+        .name("飞行暂停")
+        .description("飞行时不修改移动")
         .defaultValue(true)
         .build()
     );
     private final Setting<LiquidMode> pauseWater = sgPause.add(new EnumSetting.Builder<LiquidMode>()
-        .name("Pause Water")
-        .description("Doesn't modify movement when in water.")
+        .name("水中暂停")
+        .description("接触水体时暂停修改移动")
         .defaultValue(LiquidMode.Submerged)
         .build()
     );
     private final Setting<LiquidMode> pauseLava = sgPause.add(new EnumSetting.Builder<LiquidMode>()
-        .name("Pause Lava")
-        .description("Doesn't modify movement when in lava.")
+        .name("熔岩暂停")
+        .description("接触熔岩时暂停修改移动")
         .defaultValue(LiquidMode.Both)
         .build()
     );

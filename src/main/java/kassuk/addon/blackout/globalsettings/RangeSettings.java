@@ -18,9 +18,9 @@ public class RangeSettings extends BlackOutModule {
         super(BlackOut.SETTINGS, "Range", "Global range settings for every blackout module.");
     }
 
-    private final SettingGroup sgPlace = settings.createGroup("Placing");
-    private final SettingGroup sgAttack = settings.createGroup("Attacking");
-    private final SettingGroup sgMining = settings.createGroup("Mining");
+    private final SettingGroup sgPlace = settings.createGroup("放置");
+    private final SettingGroup sgAttack = settings.createGroup("攻击");
+    private final SettingGroup sgMining = settings.createGroup("挖掘");
 
     //  Place Ranges
     public final Setting<Double> placeRange = sgPlace.add(new DoubleSetting.Builder()
@@ -141,7 +141,7 @@ public class RangeSettings extends BlackOutModule {
         .build()
     );
     private final Setting<Double> closestAttackHeight = sgAttack.add(new DoubleSetting.Builder()
-        .name("Closest Attack Height")
+        .name("最近攻击高度")
         .description("How tall should the box be for closest range.")
         .defaultValue(1)
         .min(0)

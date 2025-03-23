@@ -27,11 +27,11 @@ public class RotationSettings extends BlackOutModule {
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgInteract = settings.createGroup("Interact");
-    private final SettingGroup sgBlockPlace = settings.createGroup("Block Place");
-    private final SettingGroup sgMining = settings.createGroup("Mining");
-    private final SettingGroup sgAttack = settings.createGroup("Attack");
-    private final SettingGroup sgUse = settings.createGroup("Use");
+    private final SettingGroup sgInteract = settings.createGroup("交互");
+    private final SettingGroup sgBlockPlace = settings.createGroup("方块放置");
+    private final SettingGroup sgMining = settings.createGroup("挖掘");
+    private final SettingGroup sgAttack = settings.createGroup("攻击");
+    private final SettingGroup sgUse = settings.createGroup("使用");
 
     //--------------------General--------------------//
     public final Setting<Boolean> vanillaRotation = sgGeneral.add(new BoolSetting.Builder()
@@ -122,27 +122,27 @@ public class RotationSettings extends BlackOutModule {
     }
 
     private Setting<Boolean> rotateSetting(String type, String verb, SettingGroup sg) {
-        return sg.add(new BoolSetting.Builder().name(type + " Rotate").description("Rotates when + " + verb).defaultValue(false).build());
+        return sg.add(new BoolSetting.Builder().name(type + "旋转").description("当" + verb + "时旋转视角").defaultValue(false).build());
     }
 
     private Setting<Double> timeSetting(String type, SettingGroup sg) {
-        return sg.add(new DoubleSetting.Builder().name(type + " Rotation Time").description("Keeps the rotation for x seconds after ending.").defaultValue(0.5).min(0).sliderRange(0, 1).build());
+        return sg.add(new DoubleSetting.Builder().name(type + "旋转时间").description("在动作结束后保持旋转x秒").defaultValue(0.5).min(0).sliderRange(0, 1).build());
     }
 
     private Setting<RotationCheckMode> modeSetting(String type, SettingGroup sg) {
-        return sg.add(new EnumSetting.Builder<RotationCheckMode>().name(type + " Rotation Mode").description(".").defaultValue(RotationCheckMode.Raytrace).build());
+        return sg.add(new EnumSetting.Builder<RotationCheckMode>().name(type + "旋转模式").description(".").defaultValue(RotationCheckMode.Raytrace).build());
     }
 
     private Setting<Double> yawAngleSetting(String type, SettingGroup sg, IVisible visible) {
-        return sg.add(new DoubleSetting.Builder().name(type + " Yaw Angle").description("Accepts rotation if yaw angle to target is under this.").defaultValue(90).range(0, 180).sliderRange(0, 180).visible(visible).build());
+        return sg.add(new DoubleSetting.Builder().name(type + "偏航角度").description("当偏航角度小于此值时接受旋转").defaultValue(90).range(0, 180).sliderRange(0, 180).visible(visible).build());
     }
 
     private Setting<Double> pitchAngleSetting(String type, SettingGroup sg, IVisible visible) {
-        return sg.add(new DoubleSetting.Builder().name(type + " Pitch Angle").description("Accepts rotation if pitch angle to target is under this.").defaultValue(45).range(0, 180).sliderRange(0, 180).visible(visible).build());
+        return sg.add(new DoubleSetting.Builder().name(type + "俯仰角度").description("当俯仰角度小于此值时接受旋转").defaultValue(45).range(0, 180).sliderRange(0, 180).visible(visible).build());
     }
 
     private Setting<Integer> memorySetting(String type, SettingGroup sg) {
-        return sg.add(new IntSetting.Builder().name(type + " Memory").description("Accepts rotation if looked at it x packets earlier.").defaultValue(1).range(1, 20).sliderRange(1, 20).build());
+        return sg.add(new IntSetting.Builder().name(type + "记忆").description("若在x个数据包前注视过该目标则接受旋转").defaultValue(1).range(1, 20).sliderRange(1, 20).build());
     }
 
     public final Vec3d vec = new Vec3d(0, 0, 0);
@@ -193,9 +193,9 @@ public class RotationSettings extends BlackOutModule {
 
     public boolean shouldRotate(RotationType type) {
         return switch (type) {
-            case Interact -> interactRotate.get();
-            case BlockPlace -> blockRotate.get();
-            case Attacking -> attackRotate.get();
+            case 交互 -> interactRotate.get();
+            case 方块放置 -> blockRotate.get();
+            case 攻击 -> attackRotate.get();
             case Mining -> mineRotate.get();
             default -> true;
         };
@@ -203,9 +203,9 @@ public class RotationSettings extends BlackOutModule {
 
     public RotationCheckMode mode(RotationType type) {
         return switch (type) {
-            case Interact -> interactMode.get();
-            case BlockPlace -> blockMode.get();
-            case Attacking -> attackMode.get();
+            case 交互 -> interactMode.get();
+            case 方块放置 -> blockMode.get();
+            case 攻击 -> attackMode.get();
             case Mining -> mineMode.get();
             default -> null;
         };
@@ -213,9 +213,9 @@ public class RotationSettings extends BlackOutModule {
 
     public double time(RotationType type) {
         return switch (type) {
-            case Interact -> interactTime.get();
-            case BlockPlace -> blockTime.get();
-            case Attacking -> attackTime.get();
+            case 交互 -> interactTime.get();
+            case 方块放置 -> blockTime.get();
+            case 攻击 -> attackTime.get();
             case Mining -> mineTime.get();
             case Use -> useTime.get();
             case Other -> 1.0;
@@ -224,9 +224,9 @@ public class RotationSettings extends BlackOutModule {
 
     public int memory(RotationType type) {
         return switch (type) {
-            case Interact -> interactMemory.get();
-            case BlockPlace -> blockMemory.get();
-            case Attacking -> attackMemory.get();
+            case 交互 -> interactMemory.get();
+            case 方块放置 -> blockMemory.get();
+            case 攻击 -> attackMemory.get();
             case Mining -> mineMemory.get();
             default -> 1;
         };
@@ -248,9 +248,9 @@ public class RotationSettings extends BlackOutModule {
 
     public double yawAngle(RotationType type) {
         return switch (type) {
-            case Interact -> interactYawAngle.get();
-            case BlockPlace -> blockYawAngle.get();
-            case Attacking -> attackYawAngle.get();
+            case 交互 -> interactYawAngle.get();
+            case 方块放置 -> blockYawAngle.get();
+            case 攻击 -> attackYawAngle.get();
             case Mining -> mineYawAngle.get();
             default -> 0.0;
         };
@@ -258,9 +258,9 @@ public class RotationSettings extends BlackOutModule {
 
     public double pitchAngle(RotationType type) {
         return switch (type) {
-            case Interact -> interactPitchAngle.get();
-            case BlockPlace -> blockPitchAngle.get();
-            case Attacking -> attackPitchAngle.get();
+            case 交互 -> interactPitchAngle.get();
+            case 方块放置 -> blockPitchAngle.get();
+            case 攻击 -> attackPitchAngle.get();
             case Mining -> minePitchAngle.get();
             default -> 0.0;
         };

@@ -50,26 +50,26 @@ public class AnchorAuraPlus extends BlackOutModule {
 
     //--------------------General--------------------//
     private final Setting<Boolean> pauseEat = sgGeneral.add(new BoolSetting.Builder()
-        .name("Pause Eat")
-        .description("Pauses when you are eating.")
+        .name("暂停进食")
+        .description("当进食时暂停模块")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwitchMode> switchMode = sgGeneral.add(new EnumSetting.Builder<SwitchMode>()
-        .name("Switch Mode")
-        .description("Switching method. Silent is the most reliable but doesn't work everywhere.")
+        .name("切换模式")
+        .description("物品切换方式。静默模式最可靠但并非所有场景都适用")
         .defaultValue(SwitchMode.Silent)
         .build()
     );
     private final Setting<LogicMode> logicMode = sgGeneral.add(new EnumSetting.Builder<LogicMode>()
-        .name("Logic Mode")
-        .description("Logic for bullying kids.")
+        .name("逻辑模式")
+        .description("选择攻击逻辑策略")
         .defaultValue(LogicMode.BreakPlace)
         .build()
     );
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Speed")
-        .description("How many anchors should be blown every second.")
+        .name("引爆速度") 
+        .description("每秒引爆锚的数量")
         .defaultValue(2)
         .min(0)
         .sliderRange(0, 20)
@@ -78,16 +78,16 @@ public class AnchorAuraPlus extends BlackOutModule {
 
     //--------------------Damage--------------------//
     private final Setting<Double> minDmg = sgDamage.add(new DoubleSetting.Builder()
-        .name("Min Damage")
-        .description("Minimum damage required to place.")
+        .name("最小伤害")
+        .description("触发放置的最低伤害值")
         .defaultValue(8)
         .min(0)
         .sliderRange(0, 20)
         .build()
     );
     private final Setting<Double> maxDmg = sgDamage.add(new DoubleSetting.Builder()
-        .name("Max Damage")
-        .description("Maximum damage to self.")
+        .name("最大自伤")
+        .description("可承受的最大自身伤害")
         .defaultValue(6)
         .min(0)
         .sliderRange(0, 20)
@@ -104,46 +104,46 @@ public class AnchorAuraPlus extends BlackOutModule {
 
     //--------------------Render--------------------//
     private final Setting<Boolean> placeSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Place Swing")
-        .description("Renders swing animation when placing a block.")
+        .name("放置动画")
+        .description("放置方块时显示手臂摆动动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Place Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("放置手部")
+        .description("选择放置方块时摆动的手部")
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
     private final Setting<Boolean> interactSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Interact Swing")
-        .description("Renders swing animation when interacting with a block.")
+        .name("交互动画")
+        .description("与方块交互时显示手臂摆动动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> interactHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Interact Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("交互手部")
+        .description("选择交互方块时摆动的手部") 
+        .defaultValue(SwingHand.真实手持)
         .visible(interactSwing::get)
         .build()
     );
     public final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
-        .name("Shape Mode")
-        .description("Which parts should be renderer.")
+        .name("渲染模式")
+        .description("选择需要渲染的模型部分")
         .defaultValue(ShapeMode.Both)
         .build()
     );
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("Line Color")
-        .description("Line color of rendered stuff")
+        .name("线框颜色")
+        .description("渲染模型的线框颜色")
         .defaultValue(new SettingColor(255, 0, 0, 255))
         .build()
     );
     public final Setting<SettingColor> color = sgRender.add(new ColorSetting.Builder()
-        .name("Side Color")
-        .description("Side color of rendered stuff")
+        .name("填充颜色")
+        .description("渲染模型的填充颜色")
         .defaultValue(new SettingColor(255, 0, 0, 50))
         .build()
     );
@@ -418,7 +418,7 @@ public class AnchorAuraPlus extends BlackOutModule {
             return false;
         }
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace) && !Managers.ROTATION.start(placeData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "placing"))) {
+        if (SettingUtils.shouldRotate(RotationType.方块放置) && !Managers.ROTATION.start(placeData.pos(), priority, RotationType.方块放置, Objects.hash(name + "placing"))) {
             return false;
         }
 
@@ -446,7 +446,7 @@ public class AnchorAuraPlus extends BlackOutModule {
 
         place(hand == null ? Hand.MAIN_HAND : hand);
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) {
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) {
             Managers.ROTATION.end(Objects.hash(name + "placing"));
         }
 
@@ -487,7 +487,7 @@ public class AnchorAuraPlus extends BlackOutModule {
             return false;
         }
 
-        if (SettingUtils.shouldRotate(RotationType.Interact) && !Managers.ROTATION.start(pos, priority, RotationType.Interact, Objects.hash(name + "interact"))) {
+        if (SettingUtils.shouldRotate(RotationType.交互) && !Managers.ROTATION.start(pos, priority, RotationType.交互, Objects.hash(name + "interact"))) {
             return false;
         }
 
@@ -515,7 +515,7 @@ public class AnchorAuraPlus extends BlackOutModule {
 
         interact(pos, dir, hand == null ? Hand.MAIN_HAND : hand);
 
-        if (SettingUtils.shouldRotate(RotationType.Interact)) {
+        if (SettingUtils.shouldRotate(RotationType.交互)) {
             Managers.ROTATION.end(Objects.hash(name + "interact"));
         }
 
@@ -556,7 +556,7 @@ public class AnchorAuraPlus extends BlackOutModule {
             return false;
         }
 
-        if (SettingUtils.shouldRotate(RotationType.Interact) && !Managers.ROTATION.start(pos, priority, RotationType.Interact, Objects.hash(name + "explode"))) {
+        if (SettingUtils.shouldRotate(RotationType.交互) && !Managers.ROTATION.start(pos, priority, RotationType.交互, Objects.hash(name + "explode"))) {
             return false;
         }
 
@@ -583,7 +583,7 @@ public class AnchorAuraPlus extends BlackOutModule {
 
         interact(pos, dir, hand == null ? Hand.MAIN_HAND : hand);
 
-        if (SettingUtils.shouldRotate(RotationType.Interact)) {
+        if (SettingUtils.shouldRotate(RotationType.交互)) {
             Managers.ROTATION.end(Objects.hash(name + "explode"));
         }
 

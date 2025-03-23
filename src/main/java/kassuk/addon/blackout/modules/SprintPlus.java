@@ -18,20 +18,20 @@ import meteordevelopment.orbit.EventPriority;
 
 public class SprintPlus extends BlackOutModule {
     public SprintPlus() {
-        super(BlackOut.BLACKOUT, "Sprint+", "Non shit sprint!");
+        super(BlackOut.BLACKOUT, "疾跑增强", "智能疾跑控制模块");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     public final Setting<SprintMode> sprintMode = sgGeneral.add(new EnumSetting.Builder<SprintMode>()
-        .name("Mode")
-        .description("The method of sprinting.")
+        .name("模式")
+        .description("选择疾跑触发方式")
         .defaultValue(SprintMode.Vanilla)
         .build()
     );
     public final Setting <Boolean> hungerCheck = sgGeneral.add(new BoolSetting.Builder()
-        .name("HungerCheck")
-        .description("Should we check if we have enough hunger to sprint")
+        .name("饥饿检查")
+        .description("启用饥饿值检查（需要≥6饥饿值）")
         .defaultValue(true)
         .build()
     );

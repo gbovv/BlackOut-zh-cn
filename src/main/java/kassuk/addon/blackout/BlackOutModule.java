@@ -111,9 +111,9 @@ public class BlackOutModule extends Module {
                 eyes.y > pos.getY() && eyes.y < pos.getY() + 1 &&
                 eyes.z > pos.getZ() && eyes.z < pos.getZ() + 1;
 
-        SettingUtils.swing(SwingState.Pre, SwingType.Placing, hand);
+        SettingUtils.swing(SwingState.Pre, SwingType.放置, hand);
         sendSequenced(s -> new PlayerInteractBlockC2SPacket(hand, new BlockHitResult(blockHitVec, blockDirection, pos, inside), s));
-        SettingUtils.swing(SwingState.Post, SwingType.Placing, hand);
+        SettingUtils.swing(SwingState.Post, SwingType.放置, hand);
     }
 
     public void interactBlock(Hand hand, Vec3d blockHitVec, Direction blockDirection, BlockPos pos) {
@@ -123,22 +123,22 @@ public class BlackOutModule extends Module {
             eyes.y > pos.getY() && eyes.y < pos.getY() + 1 &&
             eyes.z > pos.getZ() && eyes.z < pos.getZ() + 1;
 
-        SettingUtils.swing(SwingState.Pre, SwingType.Interact, hand);
+        SettingUtils.swing(SwingState.Pre, SwingType.交互, hand);
         sendSequenced(s -> new PlayerInteractBlockC2SPacket(hand, new BlockHitResult(blockHitVec, blockDirection, pos, inside), s));
-        SettingUtils.swing(SwingState.Post, SwingType.Interact, hand);
+        SettingUtils.swing(SwingState.Post, SwingType.交互, hand);
     }
 
     public void useItem(Hand hand) {
-        SettingUtils.swing(SwingState.Pre, SwingType.Using, hand);
+        SettingUtils.swing(SwingState.Pre, SwingType.使用, hand);
         sendSequenced(s -> new PlayerInteractItemC2SPacket(hand, s, Managers.ROTATION.lastDir[0], Managers.ROTATION.lastDir[1]));
-        SettingUtils.swing(SwingState.Post, SwingType.Using, hand);
+        SettingUtils.swing(SwingState.Post, SwingType.使用, hand);
     }
 
     public void clientSwing(SwingHand swingHand, Hand realHand) {
         Hand hand = switch (swingHand) {
-            case MainHand -> Hand.MAIN_HAND;
-            case OffHand -> Hand.OFF_HAND;
-            case RealHand -> realHand;
+            case 主手 -> Hand.MAIN_HAND;
+            case 副手 -> Hand.OFF_HAND;
+            case 真实手持 -> realHand;
         };
 
         mc.player.swingHand(hand, true);

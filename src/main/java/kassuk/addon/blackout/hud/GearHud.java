@@ -24,34 +24,34 @@ public class GearHud extends HudElement {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<List<Item>> items = sgGeneral.add(new ItemListSetting.Builder()
-        .name("Items")
-        .description("Items to show.")
+        .name("显示物品")
+        .description("需要显示的物品列表")
         .defaultValue(Items.END_CRYSTAL, Items.EXPERIENCE_BOTTLE, Items.OBSIDIAN, Items.TOTEM_OF_UNDYING)
         .build()
     );
     private final Setting<Double> scale = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Scale")
-        .description("The scale.")
+        .name("界面缩放比例")
+        .description("HUD元素的显示比例大小")
         .defaultValue(1.5)
         .min(0)
         .sliderRange(0, 10)
         .build()
     );
     private final Setting<SettingColor> color = sgGeneral.add(new ColorSetting.Builder()
-        .name("Color")
+        .name("文本颜色")
         .description(BlackOut.COLOR)
         .defaultValue(new SettingColor(255, 255, 255, 255))
         .build()
     );
     private final Setting<Boolean> shadow = sgGeneral.add(new BoolSetting.Builder()
-        .name("Shadow")
-        .description("Renders a shadow behind the chars.")
+        .name("文字阴影")
+        .description("在文字后方显示阴影效果")
         .defaultValue(true)
         .build()
     );
     private final Setting<Boolean> experienceInfo = sgGeneral.add(new BoolSetting.Builder()
-        .name("Experience Info")
-        .description("Displays mend percentage for armor next to experience bottles.")
+        .name("经验修复信息")
+        .description("在经验瓶旁显示护甲修复百分比")
         .defaultValue(true)
         .build()
     );

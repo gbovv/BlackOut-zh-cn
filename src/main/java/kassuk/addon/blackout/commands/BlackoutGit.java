@@ -12,13 +12,13 @@ import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class BlackoutGit extends Command {
     public BlackoutGit() {
-        super("blackoutinfo", "Gives the Blackout GitHub");
+        super("blackoutinfo", "显示Blackout的GitHub地址");
     }
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            info("https://github.com/KassuK1/BlackOut");
+            info("项目GitHub地址：https://github.com/KassuK1/BlackOut");
             return SINGLE_SUCCESS;
         });
     }

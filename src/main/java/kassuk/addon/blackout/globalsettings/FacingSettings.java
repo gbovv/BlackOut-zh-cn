@@ -23,33 +23,33 @@ import java.util.function.Predicate;
 
 public class FacingSettings extends BlackOutModule {
     public FacingSettings() {
-        super(BlackOut.SETTINGS, "Facing", "Global facing settings for every blackout module.");
+        super(BlackOut.SETTINGS, "Facing", "所有Blackout模块的全局面向设置");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     //  Place Ranges
     public final Setting<Boolean> strictDir = sgGeneral.add(new BoolSetting.Builder()
-        .name("Strict Direction")
-        .description("Doesn't place on faces which aren't in your direction.")
+        .name("严格方向")
+        .description("不在玩家朝向的面部进行放置。")
         .defaultValue(false)
         .build()
     );
     public final Setting<Boolean> unblocked = sgGeneral.add(new BoolSetting.Builder()
-        .name("Unblocked")
-        .description("Doesn't place on faces that have block on them.")
+        .name("阻挡面")
+        .description("不放置在已有方块的面上")
         .defaultValue(false)
         .build()
     );
     public final Setting<Boolean> airPlace = sgGeneral.add(new BoolSetting.Builder()
-        .name("Air Place")
-        .description("Allows placing blocks in air.")
+        .name("空中放置")
+        .description("允许在空中放置方块")
         .defaultValue(false)
         .build()
     );
     public final Setting<MaxHeight> maxHeight = sgGeneral.add(new EnumSetting.Builder<MaxHeight>()
-        .name("Max Height")
-        .description("Doesn't place on top sides of blocks at max height. Old: 1.12, New: 1.17+")
+        .name("最大高度")
+        .description("不在最大高度的方块顶部放置。旧版: 1.12, 新版: 1.17+")
         .defaultValue(MaxHeight.New)
         .build()
     );

@@ -148,7 +148,7 @@ public class AutoTrapPlus extends BlackOutModule {
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Place Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
@@ -317,7 +317,7 @@ public class AutoTrapPlus extends BlackOutModule {
                         for (int i = 0; i < Math.min(obsidian, toPlace.size()); i++) {
                             PlaceData placeData = onlyConfirmed.get() ? SettingUtils.getPlaceData(toPlace.get(i)) : SettingUtils.getPlaceDataOR(toPlace.get(i), placed::contains);
                             if (placeData.valid()) {
-                                boolean rotated = !SettingUtils.shouldRotate(RotationType.BlockPlace) || Managers.ROTATION.start(placeData.pos().offset(placeData.dir()), priority, RotationType.BlockPlace, Objects.hash(name + "placing"));
+                                boolean rotated = !SettingUtils.shouldRotate(RotationType.方块放置) || Managers.ROTATION.start(placeData.pos().offset(placeData.dir()), priority, RotationType.方块放置, Objects.hash(name + "placing"));
 
                                 if (!rotated) break;
 
@@ -374,7 +374,7 @@ public class AutoTrapPlus extends BlackOutModule {
 
         if (placeSwing.get()) clientSwing(placeHand.get(), hand);
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "placing"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "placing"));
     }
 
     private List<BlockPos> getValid(List<BlockPos> blocks) {

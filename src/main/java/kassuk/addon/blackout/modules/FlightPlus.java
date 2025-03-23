@@ -16,27 +16,27 @@ import meteordevelopment.orbit.EventHandler;
 
 public class FlightPlus extends BlackOutModule {
     public FlightPlus() {
-        super(BlackOut.BLACKOUT, "Flight+", "KasumsSoft Flight.");
+        super(BlackOut.BLACKOUT, "飞行增强", "KasumsSoft开发的飞行模块");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     private final Setting<FlightMode> flyMode = sgGeneral.add(new EnumSetting.Builder<FlightMode>()
-        .name("Flight Mode")
-        .description("Method of flying.")
+        .name("飞行模式")
+        .description("选择飞行实现方式")
         .defaultValue(FlightMode.Momentum)
         .build()
     );
     private final Setting<Boolean> useTimer = sgGeneral.add(new BoolSetting.Builder()
-        .name("Use Timer")
-        .description("Should we use timer.")
+        .name("启用计时器")
+        .description("是否使用计时器加速")
         .defaultValue(false)
         .build()
     );
     private final Setting<Double> timer = sgGeneral.add(new DoubleSetting.Builder()
         .visible(useTimer::get)
-        .name("Timer")
-        .description("How many times more packets should be sent.")
+        .name("计时器倍率")
+        .description("数据包发送倍率")
         .defaultValue(1.088)
         .min(0)
         .sliderMax(10)
@@ -44,8 +44,8 @@ public class FlightPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> speed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Speed")
-        .description("How many blocks should be moved each tick.")
+        .name("水平速度")
+        .description("水平方向移动速度（块/刻）")
         .defaultValue(0.6)
         .min(0)
         .sliderMax(10)
@@ -53,8 +53,8 @@ public class FlightPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> ySpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Y Speed")
-        .description("DA Y SPEEDOS.")
+        .name("垂直速度")
+        .description("Y轴移动速度（块/刻）")
         .defaultValue(0.5)
         .min(0)
         .sliderMax(10)
@@ -62,8 +62,8 @@ public class FlightPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> antiKickDelay = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Anti-Kick Delay")
-        .description("How many ticks should be waited between antikick packets.")
+        .name("防检测间隔")
+        .description("防检测间隔刻数")
         .defaultValue(10)
         .min(0)
         .sliderMax(100)
@@ -71,8 +71,8 @@ public class FlightPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Double> antiKickAmount = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Anti-Kick Amount")
-        .description("How much to move down.")
+        .name("防检测幅度")
+        .description("防检测时下移距离（块）")
         .defaultValue(1)
         .min(0)
         .sliderMax(10)
@@ -80,15 +80,15 @@ public class FlightPlus extends BlackOutModule {
         .build()
     );
     private final Setting<Boolean> keepY = sgGeneral.add(new BoolSetting.Builder()
-        .name("KeepY")
-        .description("Should we try to keep the same y level when jump flying.")
+        .name("维持高度")
+        .description("跳跃飞行时保持初始高度")
         .defaultValue(true)
         .visible(() -> flyMode.get() == FlightMode.Jump)
         .build()
     );
     private final Setting<Double> glideAmount = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Glide amount")
-        .description("How much to glide down.")
+        .name("滑翔速率")
+        .description("每刻下降距离（块）")
         .defaultValue(0.2)
         .min(0)
         .sliderMax(1)

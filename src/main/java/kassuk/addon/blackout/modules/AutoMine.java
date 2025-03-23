@@ -127,7 +127,7 @@ public class AutoMine extends BlackOutModule {
         .defaultValue(false)
         .build()
     );
-    /*
+    
     private final Setting<Boolean> mineBeds = sgGeneral.add(new BoolSetting.Builder()
         .name("Mine Beds")
         .description("Allows the automine to mine beds.")
@@ -139,7 +139,7 @@ public class AutoMine extends BlackOutModule {
         .description("Allows the automine to mine respawn anchors.")
         .defaultValue(false)
         .build()
-    );*/
+    );
 
     //--------------------Speed--------------------//
     private final Setting<Double> speed = sgSpeed.add(new DoubleSetting.Builder()
@@ -289,7 +289,7 @@ public class AutoMine extends BlackOutModule {
     private final Setting<SwingHand> mineHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Mine Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(() -> mineStartSwing.get() || mineEndSwing.get())
         .build()
     );
@@ -302,7 +302,7 @@ public class AutoMine extends BlackOutModule {
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Place Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
@@ -315,7 +315,7 @@ public class AutoMine extends BlackOutModule {
     private final Setting<SwingHand> attackHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
         .name("Attack Hand")
         .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .defaultValue(SwingHand.真实手持)
         .visible(attackSwing::get)
         .build()
     );
@@ -444,16 +444,16 @@ public class AutoMine extends BlackOutModule {
         toRemove.forEach(explodeAt::remove);
 
         if (targetCrystal != null && !isPaused() && mined && System.currentTimeMillis() - lastExplode > (1000 / explodeSpeed.get())) {
-            if (!SettingUtils.shouldRotate(RotationType.Attacking) || Managers.ROTATION.start(targetCrystal.getBoundingBox(), priority, RotationType.Attacking, Objects.hash(name + "attacking"))) {
+            if (!SettingUtils.shouldRotate(RotationType.攻击) || Managers.ROTATION.start(targetCrystal.getBoundingBox(), priority, RotationType.攻击, Objects.hash(name + "attacking"))) {
 
-                SettingUtils.swing(SwingState.Pre, SwingType.Attacking, Hand.MAIN_HAND);
+                SettingUtils.swing(SwingState.Pre, SwingType.攻击, Hand.MAIN_HAND);
                 sendPacket(PlayerInteractEntityC2SPacket.attack(targetCrystal, mc.player.isSneaking()));
-                SettingUtils.swing(SwingState.Post, SwingType.Attacking, Hand.MAIN_HAND);
+                SettingUtils.swing(SwingState.Post, SwingType.攻击, Hand.MAIN_HAND);
                 if (attackSwing.get()) clientSwing(attackHand.get(), Hand.MAIN_HAND);
 
                 lastExplode = System.currentTimeMillis();
 
-                if (SettingUtils.shouldRotate(RotationType.Attacking))
+                if (SettingUtils.shouldRotate(RotationType.攻击))
                     Managers.ROTATION.end(Objects.hash(name + "attacking"));
             }
         }
@@ -684,7 +684,7 @@ public class AutoMine extends BlackOutModule {
             return false;
         }
 
-        boolean rotated = !SettingUtils.shouldRotate(RotationType.Interact) || Managers.ROTATION.start(target.crystalPos.down(), priority, RotationType.Interact, Objects.hash(name + "placing"));
+        boolean rotated = !SettingUtils.shouldRotate(RotationType.交互) || Managers.ROTATION.start(target.crystalPos.down(), priority, RotationType.交互, Objects.hash(name + "placing"));
 
         if (!rotated) {
             return false;
@@ -717,7 +717,7 @@ public class AutoMine extends BlackOutModule {
             addExplode();
         }
 
-        if (SettingUtils.shouldRotate(RotationType.Interact)) Managers.ROTATION.end(Objects.hash(name + "placing"));
+        if (SettingUtils.shouldRotate(RotationType.交互)) Managers.ROTATION.end(Objects.hash(name + "placing"));
 
         if (hand == null) {
             switch (crystalSwitchMode.get()) {

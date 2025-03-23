@@ -39,29 +39,30 @@ import static kassuk.addon.blackout.utils.OLEPOSSUtils.replaceable;
 
 public class AutoCraftingTable extends BlackOutModule {
     public AutoCraftingTable() {
-        super(BlackOut.BLACKOUT, "Auto Crafting Table", "Automatically places and opens an Crafting table.");
+        super(BlackOut.BLACKOUT, "自动工作台", "自动放置并打开工作台");
     }
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
-    private final SettingGroup sgRender = settings.createGroup("Render");
+    private final SettingGroup sgRender = settings.createGroup("渲染");
 
+    //--------------------General--------------------//
     private final Setting<SwitchMode> switchMode = sgGeneral.add(new EnumSetting.Builder<SwitchMode>()
-        .name("Switch Mode")
-        .description("Switching method. Silent is the most reliable but doesn't work everywhere..")
+        .name("切换模式")
+        .description("物品切换方式。静默模式最可靠但并非所有场景都适用")
         .defaultValue(SwitchMode.Silent)
         .build()
     );
     private final Setting<Double> placeSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Place Speed")
-        .description("Tries to place this many times every second.")
+        .name("放置速度")
+        .description("每秒尝试放置工作台的次数")
         .defaultValue(1)
         .min(0)
         .sliderMin(0)
         .build()
     );
     private final Setting<Double> interactSpeed = sgGeneral.add(new DoubleSetting.Builder()
-        .name("Interact Speed")
-        .description("Tries to open the crafting table this many times every second.")
+        .name("交互速度")
+        .description("每秒尝试打开工作台的次数")
         .defaultValue(1)
         .min(0)
         .sliderMin(0)
@@ -70,40 +71,40 @@ public class AutoCraftingTable extends BlackOutModule {
 
     //--------------------Render--------------------//
     private final Setting<Boolean> placeSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Place Swing")
-        .description("Renders swing animation when placing the crafting table.")
+        .name("放置动画")
+        .description("放置工作台时显示手臂摆动动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> placeHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Place Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("放置手持")
+        .description("指定摆动动画使用的手部")
+        .defaultValue(SwingHand.真实手持)
         .visible(placeSwing::get)
         .build()
     );
     private final Setting<Boolean> interactSwing = sgRender.add(new BoolSetting.Builder()
-        .name("Interact Swing")
-        .description("Renders swing animation when interacting with a block.")
+        .name("交互动画")
+        .description("与方块交互时显示手臂摆动动画")
         .defaultValue(true)
         .build()
     );
     private final Setting<SwingHand> interactHand = sgRender.add(new EnumSetting.Builder<SwingHand>()
-        .name("Interact Hand")
-        .description("Which hand should be swung.")
-        .defaultValue(SwingHand.RealHand)
+        .name("交互手持")
+        .description("指定交互时摆动动画使用的手部")
+        .defaultValue(SwingHand.真实手持)
         .visible(interactSwing::get)
         .build()
     );
     public final Setting<SettingColor> color = sgRender.add(new ColorSetting.Builder()
-        .name("Side Color")
-        .description("Side color of rendered stuff")
+        .name("侧面颜色")
+        .description("渲染方块的侧面颜色")
         .defaultValue(new SettingColor(255, 0, 0, 50))
         .build()
     );
     public final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
-        .name("Line Color")
-        .description("Line color of rendered stuff")
+        .name("边框颜色")
+        .description("渲染方块的边框线条颜色")
         .defaultValue(new SettingColor(255, 0, 0, 255))
         .build()
     );
@@ -182,14 +183,14 @@ public class AutoCraftingTable extends BlackOutModule {
     }
 
     private boolean interact() {
-        boolean rotated = !SettingUtils.shouldRotate(RotationType.Interact) || Managers.ROTATION.start(tablePos, priority - 0.1, RotationType.Interact, Objects.hash(name + "interact"));
+        boolean rotated = !SettingUtils.shouldRotate(RotationType.交互) || Managers.ROTATION.start(tablePos, priority - 0.1, RotationType.交互, Objects.hash(name + "interact"));
         if (!rotated) {
             return false;
         }
 
         interactBlock(Hand.MAIN_HAND, tablePos.toCenterPos(), tableDir, tablePos);
 
-        if (SettingUtils.shouldRotate(RotationType.Interact)) Managers.ROTATION.end(Objects.hash(name + "interact"));
+        if (SettingUtils.shouldRotate(RotationType.交互)) Managers.ROTATION.end(Objects.hash(name + "interact"));
         if (interactSwing.get()) clientSwing(interactHand.get(), Hand.MAIN_HAND);
 
         return true;
@@ -210,7 +211,7 @@ public class AutoCraftingTable extends BlackOutModule {
             return false;
         }
 
-        boolean rotated = !SettingUtils.shouldRotate(RotationType.BlockPlace) || Managers.ROTATION.start(placeData.pos(), priority, RotationType.BlockPlace, Objects.hash(name + "placing"));
+        boolean rotated = !SettingUtils.shouldRotate(RotationType.方块放置) || Managers.ROTATION.start(placeData.pos(), priority, RotationType.方块放置, Objects.hash(name + "placing"));
         if (!rotated) {
             return false;
         }
@@ -237,7 +238,7 @@ public class AutoCraftingTable extends BlackOutModule {
 
         placeBlock(rHand, placeData.pos().toCenterPos(), placeData.dir(), placeData.pos());
 
-        if (SettingUtils.shouldRotate(RotationType.BlockPlace)) Managers.ROTATION.end(Objects.hash(name + "placing"));
+        if (SettingUtils.shouldRotate(RotationType.方块放置)) Managers.ROTATION.end(Objects.hash(name + "placing"));
         if (placeSwing.get()) clientSwing(placeHand.get(), rHand);
 
         if (hand == null) {
