@@ -5,27 +5,17 @@
 [![Downloads](https://img.shields.io/github/downloads/KassuK1/BlackOut/total?color=blueviolet&style=for-the-badge)](https://github.com/KassuK1/BlackOut/releases)
 
 # Blackout
-An addon for Meteor client that adds a variety of new/improved features to the Meteor client
-such as a new and improved CrystalAura, BedAura and PacketFly and a lot more of new things to push you above the competition.
+一个 Meteor 客户端的插件，为 Meteor 客户端添加了各种新的/改进的功能 例如全新改进的 CrystalAura、BedAura 和 PacketFly 以及更多新事物，让您在竞争中脱颖而出。
 
-### Development
-The development of the addon might not be super active due to us having our own lives contrary to the popular belief.
+## 发展
+插件的开发可能不是特别活跃，因为我们自己的生活与普遍的看法相反。
 
-### How to use Blackout:
- - Install Fabric 1.21.1.
- - Download Meteor Client and put it in your mod's folder.
- - Put Blackout in your "mods" folder with Meteor.
- - Run Fabric.
- - Enjoy the addon.
- - Join the discord if you have any issues with it.
-
-#### Latest build: https://github.com/KassuK1/BlackOut/releases/download/latest/blackout-1.0.2.jar
-
-#### Credits
-Doogie13 for helping with the block mining calculations and step offsets.
-
-RickyTheRaccoon for his InvSwitch.
-
-#### Official youtube channel https://www.youtube.com/channel/UCq_NxTxgS-Xk0TsSmhqXoyg
-
-### Once you go black you never go back
+## 如何使用 Blackout：
+安装 Fabric 1.21.1。
+下载 Meteor Client 并将其放入你的 Mod 文件夹中。
+将 Blackout 放在 Meteor 的 “mods” 文件夹中。
+运行 Fabric。
+享受插件。
+最新版本：https://github.com/KassuK1/BlackOut/releases/download/latest/blackout-1.0.2.jar
+中文最新版本：https://github.com/gbovv/BlackOut-zh-cn/releases/download/latest/blackout-1.0.2.jar
+一旦你变黑，你就再也回不去了
