@@ -12,10 +12,17 @@
 
 ## 如何使用 Blackout：
 安装 Fabric 1.21.1。
+
 下载 Meteor Client 并将其放入你的 Mod 文件夹中。
+
 将 Blackout 放在 Meteor 的 “mods” 文件夹中。
+
 运行 Fabric。
+
 享受插件。
+
 最新版本：https://github.com/KassuK1/BlackOut/releases/download/latest/blackout-1.0.2.jar
+
 中文最新版本：https://github.com/gbovv/BlackOut-zh-cn/releases/download/latest/blackout-1.0.2.jar
+
 一旦你变黑，你就再也回不去了
